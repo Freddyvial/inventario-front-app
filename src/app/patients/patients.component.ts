@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-patients',
@@ -6,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./patients.component.css']
 })
 export class PatientsComponent {
-  
+  options: FormGroup;
   title = 'Patients';
   patient = {
     documentNumber: "",
@@ -19,14 +21,29 @@ export class PatientsComponent {
     },
     town: {
       id: "",
-      department_id: "",
+      
+    },
+    department: {
+      id: "",
     },
     state: {
       id: "",
     }
+
+
+  }
+
+  email = new FormControl('', [Validators.required, Validators.email]);
+
+  getErrorMessage() {
+    
+    return this.email.hasError('email') ? 'Email incorrecto' : '';
+  }
+  
+  create() {
+    console.log(this.patient);
+  }
   
 
-    
-  }
 
 }

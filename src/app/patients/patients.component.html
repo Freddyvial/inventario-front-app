@@ -1,50 +1,88 @@
-<mat-grid-list cols="3" rowHeight="2:1">
-    <mat-grid-tile>
-        <mat-form-field appearance="fill">
-            <mat-label>Tipo de documento</mat-label>
-            <mat-select [(ngModel)]="patient.documentType.id">
-                <mat-option value="0">---Seleccione---</mat-option>
-                <mat-option value="1">Cédula</mat-option>
-                <mat-option value="2">Tarjeta de identidad</mat-option>
-                <mat-option value="3">Pasaporte</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <mat-form-field appearance="fill">
-            <mat-label>Numero de documento</mat-label>
-            <input matInput [(ngModel)]="patient.documentNumber" maxlength="15" required>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <mat-form-field appearance="fill">
-            <mat-label>Nombre completo</mat-label>
-            <input matInput [(ngModel)]="patient.fullName" maxlength="50" required>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <mat-form-field appearance="fill">
-            <mat-label>Dirección</mat-label>
-            <input matInput [(ngModel)]="patient.direction" maxlength="100" required>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-form-field appearance="fill">
-        <mat-label>Departamento</mat-label>
-        <mat-select [(ngModel)]="patient.town.department_id">
-            <mat-option value="0">---Seleccione---</mat-option>
-            <mat-option value="1">Antioquia</mat-option>
-            <mat-option value="2">Córdoba</mat-option>
-            <mat-option value="3">Caldas</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Municipios</mat-label>
-        <mat-select [(ngModel)]="patient.town">
-            <mat-option value="0">---Seleccione---</mat-option>
-            <mat-option value="1">Medellín</mat-option>
-            <mat-option value="2">Monteria</mat-option>
-            <mat-option value="3">Manizales</mat-option>
-        </mat-select>
-    </mat-form-field>
-</mat-grid-list>
-{{patient | json}}
+<div class="content-form">
+<br/>
+    <span>Creación de pacientes</span>
+<br/>
+<br/>
+    <mat-grid-list cols="3" rowHeight="100px">
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de documento</mat-label>
+                <mat-select [(ngModel)]="patient.documentType.id">
+                    <mat-option value="0">---Seleccione---</mat-option>
+                    <mat-option value="1">Cédula</mat-option>
+                    <mat-option value="2">Tarjeta de identidad</mat-option>
+                    <mat-option value="3">Pasaporte</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Numero de documento</mat-label>
+                <input matInput [(ngModel)]="patient.documentNumber" maxlength="15" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre completo</mat-label>
+                <input matInput [(ngModel)]="patient.fullName" maxlength="50" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <input matInput [(ngModel)]="patient.direction" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Departamento</mat-label>
+                <mat-select [(ngModel)]="patient.department">
+                    <mat-option value="0">---Seleccione---</mat-option>
+                    <mat-option value="1">Antioquia</mat-option>
+                    <mat-option value="2">Córdoba</mat-option>
+                    <mat-option value="3">Caldas</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Municipios</mat-label>
+                <mat-select [(ngModel)]="patient.town.id">
+                    <mat-option value="0">---Seleccione---</mat-option>
+                    <mat-option value="1">Medellín</mat-option>
+                    <mat-option value="2">Monteria</mat-option>
+                    <mat-option value="3">Manizales</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Ingrese su email</mat-label>
+                <input matInput placeholder="pat@example.com" [(ngModel)]="patient.email" [formControl]="email" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+              </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Estado</mat-label>
+                <mat-select [(ngModel)]="patient.state.id">
+                    <mat-option value="0">---Seleccione---</mat-option>
+                    <mat-option value="1">Enfermo</mat-option>
+                    <mat-option value="2">Seguimiento</mat-option>
+                    <mat-option value="3">Recuperado</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field >
+                <mat-label>Celular</mat-label>
+                <span matPrefix>+57 &nbsp;</span>
+                <input type="tel" matInput  [(ngModel)]="patient.phone" placeholder="3213456789" required>
+              </mat-form-field>
+            
+        </mat-grid-tile>
+    </mat-grid-list>
+    <button (click)="create()"  mat-raised-button color="primary">Primary</button>
+        
+</div>

@@ -2,13 +2,22 @@
 
 html, body{
      height: 100%;
-     background-color: #fff;
-     border: 1px solid transparent;
-     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
-     width: 690px;
-     margin: 0px auto;
-     padding-top: 0px;
  }
 
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.content {
+    background-color: #fff;
+    border: 1px solid transparent;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+    width: 1000px;
+    margin: 0px auto;
+    height: 100%;
+}
+
+.content-form {
+    width: 750px;
+    margin: 0px auto;
+    height: 100%;
+}
