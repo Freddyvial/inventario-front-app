@@ -1,11 +1,13 @@
 <mat-toolbar color="primary">
     <span>Covid-19 System</span>
-    <button mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Menú Principal</button>
+    <button class="menu" mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Menú Principal</button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Inicio</button>
-      <button mat-menu-item>Ayuda</button>
+      <button mat-menu-item> <a routerLink="/patients" routerLinkActive="active">Inicio</a></button>
+      <button mat-menu-item><a routerLink="/test" routerLinkActive="active">Test</a></button>
     </mat-menu>
   </mat-toolbar>
-<div class="content">
-<app-patients></app-patients>
-</div>
+  <div class="content" position> 
+    <router-outlet></router-outlet>
+  </div>
+
+  

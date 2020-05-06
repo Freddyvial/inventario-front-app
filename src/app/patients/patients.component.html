@@ -1,8 +1,8 @@
 <div class="content-form">
-<br/>
+    <br />
     <span>Creación de pacientes</span>
-<br/>
-<br/>
+    <br />
+    <br />
     <mat-grid-list cols="3" rowHeight="100px">
         <mat-grid-tile>
             <mat-form-field appearance="fill">
@@ -58,9 +58,10 @@
         <mat-grid-tile>
             <mat-form-field appearance="fill">
                 <mat-label>Ingrese su email</mat-label>
-                <input matInput placeholder="pat@example.com" [(ngModel)]="patient.email" [formControl]="email" required>
+                <input matInput placeholder="pat@example.com" [(ngModel)]="patient.email" [formControl]="email"
+                    required>
                 <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
-              </mat-form-field>
+            </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
             <mat-form-field appearance="fill">
@@ -75,14 +76,25 @@
 
         </mat-grid-tile>
         <mat-grid-tile>
-            <mat-form-field >
+            <mat-form-field>
                 <mat-label>Celular</mat-label>
                 <span matPrefix>+57 &nbsp;</span>
-                <input type="tel" matInput  [(ngModel)]="patient.phone" placeholder="3213456789" required>
-              </mat-form-field>
-            
+                <input type="tel" matInput [(ngModel)]="patient.phone" placeholder="3213456789" required>
+            </mat-form-field>
         </mat-grid-tile>
-    </mat-grid-list>
-    <button (click)="create()"  mat-raised-button color="primary">Primary</button>
+        <mat-grid-tile>
+            <mat-form-field>
+                <mat-label>Fecha Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="patient.birthDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+              </mat-form-field>
+              
+        </mat-grid-tile>
         
+
+    </mat-grid-list>
+    <button mat-raised-button color="primary">Primary</button>
+
 </div>
+

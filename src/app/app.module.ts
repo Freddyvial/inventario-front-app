@@ -16,10 +16,22 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button'; 
 import {MatMenuModule} from '@angular/material/menu'; 
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import { HttpClientModule } from '@angular/common/http';
+import { QuestionsServices } from './services/QuestionsServices';
+import {MatRadioModule} from '@angular/material/radio'; 
+import {TestComponent} from './test/test.component';
+import {Routes, RouterModule } from '@angular/router';
+const routes: Routes = [
+  { path: 'patients', component: PatientsComponent },
+  { path: 'test', component: TestComponent },
+  { path: '', component: PatientsComponent },
+];
 @NgModule({
   declarations: [
     HomeComponent,
-    PatientsComponent
+    PatientsComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,10 +49,17 @@ import {MatMenuModule} from '@angular/material/menu';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
+    MatDatepickerModule,
+    HttpClientModule,
+    MatRadioModule,
+    RouterModule.forRoot(routes),
+
   ],
+  exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [
+  providers: [QuestionsServices,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })
+
 export class AppModule { }
