@@ -1,19 +1,24 @@
 <mat-card *ngIf="currenQuestion !== undefined">
-    <mat-card-header>
+   
+    <mat-card-header *ngIf='currenQuestion.positiveAnswer !== 0'>
         <mat-card-title>Pregunta</mat-card-title>
         <mat-card-subtitle>Numero: # {{currenQuestion.id}}</mat-card-subtitle>
     </mat-card-header>
 
-    <mat-card-content>
+    <mat-card-content *ngIf='currenQuestion.positiveAnswer !==0'>
         <p>
-            La pregunta a responder: {{currenQuestion.content}}
+            {{currenQuestion.content}}
         </p>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf='currenQuestion.positiveAnswer !== 0'>
         <mat-radio-group [(ngModel)]="currenQuestion.response">
             <mat-radio-button value=1>Sí</mat-radio-button>
             <mat-radio-button value=0>No</mat-radio-button>
         </mat-radio-group>
-        <button (click)='getNexQuestion()' mat-raised-button color="primary">Siguiente Pregunta</button>
+        <button *ngIf='currenQuestion.positiveAnswer !== 0' (click)='getNexQuestion()' mat-raised-button color="primary">Siguiente Pregunta </button>
+
     </mat-card-actions>
+    <button (click)='getResponses()' *ngIf='currenQuestion.positiveAnswer == 0' mat-raised-button color="primary">Resultado</button>    
+    
 </mat-card>
+

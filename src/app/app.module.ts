@@ -22,6 +22,7 @@ import { QuestionsServices } from './services/QuestionsServices';
 import {MatRadioModule} from '@angular/material/radio'; 
 import {TestComponent} from './test/test.component';
 import {Routes, RouterModule } from '@angular/router';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },
   { path: 'test', component: TestComponent },
@@ -53,6 +54,7 @@ const routes: Routes = [
     HttpClientModule,
     MatRadioModule,
     RouterModule.forRoot(routes),
+    MatProgressSpinnerModule,
 
   ],
   exports: [RouterModule],

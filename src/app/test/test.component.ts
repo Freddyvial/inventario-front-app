@@ -7,6 +7,7 @@ import { QuestionsServices } from '../services/QuestionsServices';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent {
+  results=0;
   title = 'Test';
   questions: any;
   responses = [];
@@ -27,7 +28,7 @@ export class TestComponent {
     this.questionsServices.getQuestions().subscribe(resp => {
       this.questions = resp;
       this.currenQuestion = this.questions[0];
-      this.currenQuestion.response = '1';
+      this.currenQuestion.response = '';
     }, error => {
       console.log('error::', error)
     });
@@ -36,15 +37,35 @@ export class TestComponent {
 
   getNexQuestion() {
     if (this.currenQuestion.response === '1') {
-      this.responses.push(this.currenQuestion);
-      this.currenQuestion = this.questions.find(question => question.id === this.currenQuestion.positiveAnswer);
+      if (this.currenQuestion.positiveAnswer == 0) {
+        this.responses.push(this.currenQuestion);
+      } else {
+        this.responses.push(this.currenQuestion);
+        this.currenQuestion = this.questions.find(question => question.id === this.currenQuestion.positiveAnswer);
+      }
     } else {
       if (this.currenQuestion.response === '0') {
-        this.responses.push(this.currenQuestion);
-        this.currenQuestion = this.questions.find(question => question.id === this.currenQuestion.negativeAnswer);
+        if (this.currenQuestion.negativeAnswer == 0) {
+          this.responses.push(this.currenQuestion);
+        } else {
+          this.responses.push(this.currenQuestion);
+          this.currenQuestion = this.questions.find(question => question.id === this.currenQuestion.negativeAnswer);
+        }
       }
+
     }
-    this.currenQuestion.response = '0';
+    this.currenQuestion.response = '';
+  }
+
+  getResponses() {
+    
+    this.responses.forEach(r => {
+      
+      this.results += +r.value; 
+
+    }
+      );
+console.log(this.results)
   }
 
 }
