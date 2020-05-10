@@ -21,4 +21,6 @@
     <button (click)='getResponses()' *ngIf='currenQuestion.positiveAnswer == 0' mat-raised-button color="primary">Resultado</button>    
     
 </mat-card>
-
+<div *ngIf= 'end' >
+  {{results}}  
+</div>

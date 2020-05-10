@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { QuestionsServices } from '../services/QuestionsServices';
+import { AnswerPatientServices } from '../services/AnswerPatientServices';
 
 @Component({
   selector: 'app-test',
@@ -7,16 +8,18 @@ import { QuestionsServices } from '../services/QuestionsServices';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent {
-  results=0;
+  results = 0;
   title = 'Test';
   questions: any;
   responses = [];
+  end = false;
+  loading = false;
 
 
   currenQuestion: any;
 
 
-  constructor(private questionsServices: QuestionsServices) { }
+  constructor(private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
 
   ngOnInit() {
     this.currenQuestion = {};
@@ -58,14 +61,31 @@ export class TestComponent {
   }
 
   getResponses() {
-    
-    this.responses.forEach(r => {
-      
-      this.results += +r.value; 
-
+    this.loading = true;
+    this.sumResponses();
+    const body = {
+      idPatient: '1',
+      resul: this.results
     }
-      );
-console.log(this.results)
+
+    this.answerPatientServices.setAnswerPatient(body).subscribe(resp => {
+    this.loading = false;
+    }, error => {
+      console.error(error);
+      this.loading = false;
+    });
+  }
+
+  sumResponses() {
+    this.responses.forEach(r => {
+      if (r.response == 1) {
+        this.results += +r.value;
+      }
+    }
+
+    );
+
+    this.end = true;
   }
 
 }
