@@ -24,6 +24,8 @@ import { TestComponent } from './test/test.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AnswerPatientServices } from './services/AnswerPatientServices';
+import { PatientsServices } from './services/PatientsServices';
+import { DepartmentService} from './services/DepartmentService';
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },
   { path: 'test', component: TestComponent },
@@ -60,7 +62,7 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [QuestionsServices, AnswerPatientServices,
+  providers: [QuestionsServices, AnswerPatientServices,PatientsServices,DepartmentService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })

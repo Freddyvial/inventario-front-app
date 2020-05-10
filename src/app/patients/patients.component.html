@@ -37,10 +37,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Departamento</mat-label>
                 <mat-select [(ngModel)]="patient.department">
-                    <mat-option value="0">---Seleccione---</mat-option>
-                    <mat-option value="1">Antioquia</mat-option>
-                    <mat-option value="2">Córdoba</mat-option>
-                    <mat-option value="3">Caldas</mat-option>
+                    <mat-option *ngFor="let department of departments" value="department.id">{{department.name}}</mat-option>                  
                 </mat-select>
             </mat-form-field>
         </mat-grid-tile>
@@ -94,6 +91,6 @@
         
 
     </mat-grid-list>
-    <button mat-raised-button color="primary">Primary</button>
+    <button (click)='createPatient()' mat-raised-button color="primary">Guardar</button>
 </div>
 
