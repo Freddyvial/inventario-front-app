@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { QuestionsServices } from '../services/QuestionsServices';
 import { AnswerPatientServices } from '../services/AnswerPatientServices';
-
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -19,21 +19,36 @@ export class TestComponent {
   currenQuestion: any;
 
 
-  constructor(private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
+  constructor(private spinner: NgxSpinnerService,private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
 
   ngOnInit() {
+        /** spinner starts on init */
+        this.spinner.show();
+        setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.spinner.hide();
+        }, 5000);
     this.currenQuestion = {};
 
     this.importQuestions();
   }
 
   importQuestions() {
+    this.spinner.show();
     this.questionsServices.getQuestions().subscribe(resp => {
       this.questions = resp;
       this.currenQuestion = this.questions[0];
       this.currenQuestion.response = '';
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 5000);
     }, error => {
       console.log('error::', error)
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 5000);
     });
 
   }
@@ -61,18 +76,23 @@ export class TestComponent {
   }
 
   getResponses() {
-    this.loading = true;
+    this.spinner.show();
     this.sumResponses();
     const body = {
       idPatient: '1',
       resul: this.results
     }
-
     this.answerPatientServices.setAnswerPatient(body).subscribe(resp => {
-    this.loading = false;
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 5000);
     }, error => {
+      setTimeout(() => {
+        /** spinner ends after 5 seconds */
+        this.spinner.hide();
+      }, 5000);
       console.error(error);
-      this.loading = false;
     });
   }
 

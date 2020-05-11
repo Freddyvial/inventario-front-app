@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -25,7 +26,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AnswerPatientServices } from './services/AnswerPatientServices';
 import { PatientsServices } from './services/PatientsServices';
-import { DepartmentService} from './services/DepartmentService';
+import { DepartmentService } from './services/DepartmentService';
+import { TownServices } from './services/TownServices';
+
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },
   { path: 'test', component: TestComponent },
@@ -38,6 +41,7 @@ const routes: Routes = [
     TestComponent,
   ],
   imports: [
+    NgxSpinnerModule,
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -59,10 +63,10 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MatProgressSpinnerModule,
 
-  ],
+  ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [QuestionsServices, AnswerPatientServices,PatientsServices,DepartmentService,
+  providers: [QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })
