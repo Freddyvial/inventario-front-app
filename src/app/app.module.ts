@@ -28,17 +28,22 @@ import { AnswerPatientServices } from './services/AnswerPatientServices';
 import { PatientsServices } from './services/PatientsServices';
 import { DepartmentService } from './services/DepartmentService';
 import { TownServices } from './services/TownServices';
-
+import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent },
+  { path: 'patients', component: PatientsComponent},
   { path: 'test', component: TestComponent },
-  { path: '', component: PatientsComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'login', component: LoginComponent }
 ];
 @NgModule({
   declarations: [
     HomeComponent,
     PatientsComponent,
     TestComponent,
+    LoginComponent,
+    AdminComponent,
   ],
   imports: [
     NgxSpinnerModule,

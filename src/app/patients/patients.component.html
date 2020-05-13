@@ -39,7 +39,7 @@
                 <mat-label>Departamento</mat-label>
                 <mat-select [(ngModel)]="patient.department.id">
                     <mat-option (click)="importTownByDepartment(department.id)" *ngFor="let department of departments"
-                        value="department.id">{{department.name}}</mat-option>
+                        [value]="department.id">{{department.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </mat-grid-tile>
@@ -47,9 +47,10 @@
             <mat-form-field appearance="fill">
                 <mat-label>Municipios</mat-label>
                 <mat-select [(ngModel)]="patient.town.id">
-                    <mat-option *ngFor="let town of towns" value="town.id">{{town.name}}</mat-option>
+                    <mat-option *ngFor="let town of towns" [value]="town.id">{{town.name}}</mat-option>
 
                 </mat-select>
+
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -92,4 +93,5 @@
 
     </mat-grid-list>
     <button (click)='createPatient()' mat-raised-button color="primary">Guardar</button>
+  
 </div>

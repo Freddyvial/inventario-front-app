@@ -20,10 +20,7 @@ export class PatientsComponent {
   ngOnInit() {
     /** spinner starts on init */
     this.spinner.show();
-    setTimeout(() => {
-      /** spinner ends after 5 seconds */
-      this.spinner.hide();
-    }, 5000);
+
     this.importDepartment();
   }
 
@@ -31,8 +28,10 @@ export class PatientsComponent {
   importDepartment() {
     this.departmentService.getDepartment().subscribe(resp => {
       this.departments = resp;
+      this.spinner.hide();
     }, error => {
       console.log('error::', error)
+      this.spinner.hide();
     });
 
   }
@@ -40,16 +39,11 @@ export class PatientsComponent {
     this.spinner.show();
     this.townServices.getTownByDepartment(id).subscribe(resp => {
       this.towns = resp;
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
+      console.log(this.towns)
     }, error => {
       console.log('error::', error)
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     });
 
   }
@@ -81,11 +75,16 @@ export class PatientsComponent {
   }
 
   createPatient() {
-    console.log(this.patient)
+    this.spinner.show();
     this.patientsServices.setPatient(this.patient).subscribe(resp => {
-
+      this.spinner.hide();
     }, error => {
-      console.error(error);
+      if (error && error.message && error.message === 'Usuario ya existe') {
+        console.info(error); // mostar mensaje en pantalla al usuario
+      } else {
+        console.error(error);
+      }
+      this.spinner.hide();
 
     });
 
