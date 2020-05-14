@@ -32,7 +32,7 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth.guard';
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent},
+  { path: 'patients', component: PatientsComponent, canActivate: [AuthGuard] },
   { path: 'test', component: TestComponent },
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent }

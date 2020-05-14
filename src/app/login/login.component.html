@@ -1,1 +1,32 @@
-<p>login works!</p>
+
+<mat-card class= "card">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-subtitle>Por favor ingresa los datos</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+       Mensajes al usuario va aqui
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="algo@example.com" [(ngModel)]="user.email" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input  matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="user.password">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>    
+    </div>
+  </mat-card-actions>
+  <button (click)="login()"  mat-raised-button color="primary">INGRESO</button>    
+</mat-card>
+

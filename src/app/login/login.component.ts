@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../user';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,18 +10,29 @@ import { User } from '../user';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  hide = true;
 
-  constructor(private loginService: AuthService) { }
+  constructor(private loginService: AuthService,private router: Router) { }
 
-  user: User;
-
+  user = new User();
+  options: FormGroup;
   ngOnInit(): void {
   }
+  
+  email = new FormControl('', [Validators.required, Validators.email]);
+  
+  getErrorMessage() {
 
-  login() {
+    return this.email.hasError('email') ? 'Email incorrecto' : '';
+  }
+  
+  login() {   
+     
     this.loginService.login(this.user).subscribe(resp => {
       if (resp != null) {
-        localStorage.setItem('SESSION', 'LOGUEADO');
+        console.log(resp)
+        localStorage.setItem('SESSION','LOGUEADO');
+        this.router.navigateByUrl('/patients')
       } else {
         console.log('Usuario o contraseña incorrecta')
       }
