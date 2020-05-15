@@ -1,4 +1,4 @@
-
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-scale-ripple-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
 <mat-card class= "card">
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
@@ -11,22 +11,23 @@
   </mat-card-content>
   <mat-card-actions>
     <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field class="email" appearance="fill">
           <mat-label>Email</mat-label>
-          <input matInput placeholder="algo@example.com" [(ngModel)]="user.email" [formControl]="email" required>
+          <input maxlength="30" matInput placeholder="algo@example.com" [(ngModel)]="user.email" [formControl]="email" required>
           <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
+      
       </div>
       <div>
-        <mat-form-field appearance="fill">
+        <mat-form-field class="email" appearance="fill">
           <mat-label>Contraseña</mat-label>
-          <input  matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="user.password">
+          <input maxlength="15"  matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="user.password">
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
         </mat-form-field>    
     </div>
   </mat-card-actions>
-  <button (click)="login()"  mat-raised-button color="primary">INGRESO</button>    
+  <button (click)="login()" [disabled]="!user.password || !user.email" mat-raised-button color="primary">INGRESO</button>   
 </mat-card>
 

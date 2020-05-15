@@ -1,6 +1,7 @@
 <mat-toolbar color="primary">
     <span>Covid-19 System</span>
     <button class="menu" mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Menú Principal</button>
+    <button class="exit" *ngIf="isLoggedIn" (click)="logout()" mat-raised-button color="primary">Logout</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item> <a routerLink="/patients" routerLinkActive="active">Inicio</a></button>
       <button mat-menu-item><a routerLink="/test" routerLinkActive="active">Test</a></button>

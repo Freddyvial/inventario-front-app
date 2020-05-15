@@ -15,7 +15,7 @@ export class PatientsComponent {
   title = 'Patients';
   departments;
   towns;
-
+  
   constructor(private spinner: NgxSpinnerService, private patientsServices: PatientsServices, private departmentService: DepartmentService, private townServices: TownServices) { }
   ngOnInit() {
     /** spinner starts on init */
@@ -72,6 +72,28 @@ export class PatientsComponent {
       id: "",
     },
     birthDate: ""
+  }
+  clean() {
+    this.patient.documentNumber = "";
+    this.patient.documentType.id = "";
+    this.patient.fullName = "";
+    this.patient.email = "";
+    this.patient.direction = "";
+    this.patient.phone = "";
+    this.patient.state.id = "";
+    this.patient.town.id = "";
+    this.patient.department.id = "";
+    this.patient.birthDate = "";
+  }
+  isFormInvalid() {
+    if (!this.patient.documentNumber || !this.patient.documentType.id ||
+      !this.patient.fullName || !this.patient.email ||
+      !this.patient.direction || !this.patient.phone ||
+      !this.patient.state.id || !this.patient.town.id ||
+      !this.patient.department.id || !this.patient.birthDate) {
+      return true;
+    }
+   
   }
 
   createPatient() {

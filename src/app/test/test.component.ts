@@ -19,18 +19,14 @@ export class TestComponent {
   currenQuestion: any;
 
 
-  constructor(private spinner: NgxSpinnerService,private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
+  constructor(private spinner: NgxSpinnerService, private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
 
   ngOnInit() {
-        /** spinner starts on init */
-        this.spinner.show();
-        setTimeout(() => {
-          /** spinner ends after 5 seconds */
-          this.spinner.hide();
-        }, 5000);
-    this.currenQuestion = {};
 
+    this.spinner.show();
+    this.currenQuestion = {};
     this.importQuestions();
+    this.spinner.hide();
   }
 
   importQuestions() {
@@ -39,18 +35,11 @@ export class TestComponent {
       this.questions = resp;
       this.currenQuestion = this.questions[0];
       this.currenQuestion.response = '';
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     }, error => {
       console.log('error::', error)
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 5000);
+      this.spinner.hide();
     });
-
   }
 
   getNexQuestion() {
@@ -83,15 +72,14 @@ export class TestComponent {
       resul: this.results
     }
     this.answerPatientServices.setAnswerPatient(body).subscribe(resp => {
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 5000);
+
+
+      this.spinner.hide();
+
     }, error => {
-      setTimeout(() => {
-        /** spinner ends after 5 seconds */
-        this.spinner.hide();
-      }, 5000);
+
+      this.spinner.hide();
+
       console.error(error);
     });
   }
