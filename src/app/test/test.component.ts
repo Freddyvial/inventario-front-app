@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { QuestionsServices } from '../services/QuestionsServices';
 import { AnswerPatientServices } from '../services/AnswerPatientServices';
 import { NgxSpinnerService } from "ngx-spinner";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -19,14 +20,12 @@ export class TestComponent {
   currenQuestion: any;
 
 
-  constructor(private spinner: NgxSpinnerService, private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
+  constructor(private router: Router, private spinner: NgxSpinnerService, private questionsServices: QuestionsServices, private answerPatientServices: AnswerPatientServices) { }
 
   ngOnInit() {
-
-    this.spinner.show();
-    this.currenQuestion = {};
+ this.currenQuestion = {};
     this.importQuestions();
-    this.spinner.hide();
+  
   }
 
   importQuestions() {
@@ -40,6 +39,9 @@ export class TestComponent {
       console.log('error::', error)
       this.spinner.hide();
     });
+  }
+  goToRegistry() {
+    this.router.navigateByUrl('/patients')
   }
 
   getNexQuestion() {
@@ -72,14 +74,9 @@ export class TestComponent {
       resul: this.results
     }
     this.answerPatientServices.setAnswerPatient(body).subscribe(resp => {
-
-
       this.spinner.hide();
-
     }, error => {
-
       this.spinner.hide();
-
       console.error(error);
     });
   }

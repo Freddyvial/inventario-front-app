@@ -7,7 +7,7 @@
     </mat-card-header>
 
     <mat-card-content *ngIf='currenQuestion.positiveAnswer !==0'>
-        <p>
+        <p class="styleText">
             {{currenQuestion.content}}
         </p>
     </mat-card-content>
@@ -23,5 +23,8 @@
     
 </mat-card>
 <div *ngIf= 'end' >
-  {{results}}  
+    <h1>Muchas gracias por completar el test</h1>
+    <h2>Tu probabilidad es de:</h2>
+    {{results}}<p>%</p>
+    <button  (click)='goToRegistry()' mat-raised-button color="primary"> ¡'Registro gratis!</button>
 </div>

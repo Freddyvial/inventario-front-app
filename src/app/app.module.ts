@@ -33,9 +33,9 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth.guard';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent, canActivate: [AuthGuard] },
+  { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '', pathMatch: 'full', redirectTo: 'test' },
   { path: 'login', component: LoginComponent }
 ];
 @NgModule({
