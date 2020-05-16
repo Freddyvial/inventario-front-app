@@ -16,11 +16,11 @@ export class AuthService {
   }
 
   public isLoggedIn(){
-    return localStorage.getItem('SESSION') !== null;
+    return localStorage.getItem('ROLE') !== null;
   }
 
   public logout(){
-    localStorage.removeItem('SESSION');
+    localStorage.removeItem('ROLE');
     // redirect Login
   }
 }

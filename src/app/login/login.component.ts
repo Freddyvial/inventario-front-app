@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../user';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
   isLoggedIn: HomeComponent;
   user = new User();
   options: FormGroup;
-  
+  newUser= new User();
+  ObjList;
   ngOnInit(): void {
   }
 
@@ -34,13 +35,13 @@ export class LoginComponent implements OnInit {
   login() {
     this.spinner.show();
     this.loginService.login(this.user).subscribe(resp => {
+      const user  = JSON.parse(JSON.stringify(resp));
+      console.log(user);
+      console.log(user.role.id)
       if (resp != null) {
-        console.log(resp)
-        localStorage.setItem('SESSION', 'LOGUEADO');
-        this.router.navigateByUrl('/patients')
+        localStorage.setItem('ROLE', 'LOGUEADO');
+        this.router.navigateByUrl('/test')
         this.spinner.hide();
-
-
       } else {
         this.spinner.hide();
 

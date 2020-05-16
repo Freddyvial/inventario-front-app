@@ -32,21 +32,29 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthGuard } from './auth.guard';
 import {MatSnackBarModule} from '@angular/material/snack-bar'; 
+import {MatTabsModule} from '@angular/material/tabs';
+import { MedicalComponent } from './medical/medical.component';
+import {MatTableModule} from '@angular/material/table';
+import { MedicalService } from './services/MedicalService';
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent },
   { path: '', pathMatch: 'full', redirectTo: 'test' },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'medical', component: MedicalComponent }
 ];
 @NgModule({
-  declarations: [
+    declarations: [
     HomeComponent,
     PatientsComponent,
     TestComponent,
     LoginComponent,
     AdminComponent,
+    MedicalComponent,
   ],
   imports: [
+    MatTableModule,
+    MatTabsModule,
     MatSnackBarModule,
     NgxSpinnerModule,
     BrowserModule,
@@ -73,7 +81,7 @@ const routes: Routes = [
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,
+  providers: [QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,MedicalService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })

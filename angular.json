@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "covid19-front-app"
+  "defaultProject": "covid19-front-app",
+  "cli": {
+    "analytics": "ee1ca6b6-4f91-4469-9e08-73a6304a55dd"
+  }
 }

@@ -19,15 +19,13 @@ export class PatientsComponent {
   towns;
   
   constructor(private router: Router,private _snackBar: MatSnackBar,private spinner: NgxSpinnerService, private patientsServices: PatientsServices, private departmentService: DepartmentService, private townServices: TownServices) { }
-  ngOnInit() {
-    /** spinner starts on init */
-    this.spinner.show();
-
-    this.importDepartment();
+  ngOnInit() { 
+       this.importDepartment();
   }
 
   email = new FormControl('', [Validators.required, Validators.email]);
   importDepartment() {
+    this.spinner.show();
     this.departmentService.getDepartment().subscribe(resp => {
       this.departments = resp;
       this.spinner.hide();
@@ -35,7 +33,6 @@ export class PatientsComponent {
       console.log('error::', error)
       this.spinner.hide();
     });
-
   }
   importTownByDepartment(id) {
     this.spinner.show();
