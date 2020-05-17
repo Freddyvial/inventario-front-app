@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   newUser= new User();
   ObjList;
   ngOnInit(): void {
+    
   }
 
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -39,8 +40,10 @@ export class LoginComponent implements OnInit {
       console.log(user);
       console.log(user.role.id)
       if (resp != null) {
-        localStorage.setItem('ROLE', 'LOGUEADO');
+        localStorage.setItem('SESION', 'LOGUEADO');
+        localStorage.setItem('ROLE', user.role.id);
         this.router.navigateByUrl('/test')
+
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -52,7 +55,7 @@ export class LoginComponent implements OnInit {
     })
 
   }
-  
+
 
   
   openSnackBar(message: string, action: string) {

@@ -48,9 +48,7 @@
                 <mat-label>Municipios</mat-label>
                 <mat-select [(ngModel)]="patient.town.id">
                     <mat-option *ngFor="let town of towns" [value]="town.id">{{town.name}}</mat-option>
-
-                </mat-select>
-
+                 </mat-select>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>

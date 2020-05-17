@@ -1,5 +1,5 @@
 <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-scale-ripple-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
-<mat-card *ngIf="currenQuestion !== undefined">
+<mat-card class="content-form" *ngIf="currenQuestion !== undefined">
    
     <mat-card-header *ngIf='currenQuestion.positiveAnswer !== 0'>
         <mat-card-title>Pregunta</mat-card-title>

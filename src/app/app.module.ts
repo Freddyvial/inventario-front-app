@@ -36,6 +36,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MedicalComponent } from './medical/medical.component';
 import {MatTableModule} from '@angular/material/table';
 import { MedicalService } from './services/MedicalService';
+
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent },

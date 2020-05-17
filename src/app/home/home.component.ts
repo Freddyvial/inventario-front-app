@@ -12,12 +12,19 @@ export class HomeComponent {
   title = 'Home';
 
   constructor(private router: Router,private loginService: AuthService) { }
-  
-  isLoggedIn=this.loginService.isLoggedIn();
+  isLogged(){
+    if(this.loginService.isLoggedIn()){
+      return true;
+    }
 
+  }
+ 
+  
   logout(){
     console.log('logout');
     this.loginService.logout();
     this.router.navigateByUrl('/login')
+
   }
+
 }

@@ -1,58 +1,126 @@
-<div *ngIf="dataSource"  class="content-form">
-  
-    <table mat-table [dataSource]="dataSource">
-  
-      <!-- id Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
-  
-      <!-- numberDocument Column -->
-      <ng-container matColumnDef="numberDocument">
-        <th mat-header-cell *matHeaderCellDef> Number Docuement </th>
-        <td mat-cell *matCellDef="let element"> {{element.numberDocument}} </td>
-      </ng-container>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"
+  [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
 
-      <!-- fullName Column -->
-      <ng-container matColumnDef="fullName">
-        <th mat-header-cell *matHeaderCellDef> FullName </th>
-        <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
-      </ng-container>
-  
-      <!-- email Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
-        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-      </ng-container>
+<div *ngIf="dataSource"   class="content-form">
+  <br />
+  <h1 class="textTitle">Registro de Médicos</h1>
+  <br />
+  <br />
+  <mat-form-field *ngIf="!form">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+  </mat-form-field>     
+  <table mat-table *ngIf="!form" [dataSource]="dataSource">
 
-      <!-- estado Column -->
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef> State </th>
-        <td mat-cell *matCellDef="let element"> {{element.state}} </td>
-      </ng-container>
-        
-      <!-- phone Column -->
-      <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef> phone </th>
-        <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
-      </ng-container>
-        
-      <!-- DocumentType.id Column -->
-      <ng-container matColumnDef="documentType.id">
-        <th mat-header-cell *matHeaderCellDef> DocumentType </th>
-        <td mat-cell *matCellDef="let element"> {{element.documentType.value}} </td>
-      </ng-container>
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
 
-      <!-- action Column -->
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> action </th>
-        <td mat-cell *matCellDef="let element"> <button  mat-raised-button color="primary">Edit</button>    </td>    
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    <!-- numberDocument Column -->
+    <ng-container matColumnDef="numberDocument">
+      <th mat-header-cell *matHeaderCellDef> Number Docuement </th>
+      <td mat-cell *matCellDef="let element"> {{element.numberDocument}} </td>
+    </ng-container>
+
+    <!-- fullName Column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef> FullName </th>
+      <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+    </ng-container>
+
+    <!-- email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!-- estado Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>State </th>
+      <td mat-cell *matCellDef="let element"> {{element.state}} </td>
+    </ng-container>
+
+    <!-- phone Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef> phone </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+
+    <!-- DocumentType.id Column -->
+    <ng-container matColumnDef="documentType.id">
+      <th mat-header-cell *matHeaderCellDef> DocumentType </th>
+      <td mat-cell *matCellDef="let element"> {{element.documentType.value}} </td>
+    </ng-container>
+
+    <!-- action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> action </th>
+      <td mat-cell *matCellDef="let element"> <button (click)="edit(element)" mat-raised-button
+          color="primary">Edit</button> </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+  <button *ngIf="!form" (click)="new()" mat-raised-button color="primary">Nuevo</button>
+
+  <div *ngIf="form" class="content-form">
+    <mat-grid-list cols="2" rowHeight="100px">
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>numberDocument</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.numberDocument" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>fullName</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.fullName" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>email</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.email" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>State</mat-label>
+          <mat-select [(ngModel)]="medical.state">             
+            <mat-option value="1">Activo</mat-option>
+            <mat-option value="2">Inactivo</mat-option>
+
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>phone</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.phone" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>DocumentType</mat-label>
+          <mat-select [(ngModel)]="medical.documentType.id">             
+            <mat-option value=1>Registro Civíl</mat-option>
+            <mat-option value=2>Terjeta Identidad</mat-option>
+            <mat-option value=3>Cédula de Ciudadanía</mat-option>
+            <mat-option value=4>Cédula de Extrangería</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <button [disabled]="isFormInvalid()" (click)="save()" mat-raised-button color="primary">Save</button>
+    <button  (click)="cancel()" mat-raised-button color="primary">Cancel</button>
   </div>
+</div>
