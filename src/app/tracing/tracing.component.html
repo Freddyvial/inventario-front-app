@@ -1,0 +1,74 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"
+  [fullScreen]="true">
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<div   class="content-form">
+  <br />
+  <h1 class="textTitle">Registro de Seguimiento</h1>
+  <br />
+  <br />
+  <mat-form-field >
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+  </mat-form-field> 
+
+  <table mat-table  [dataSource]="dataSource">
+
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- date Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- detailTracing Column -->
+    <ng-container matColumnDef="detailTracing">
+      <th mat-header-cell *matHeaderCellDef> detailTracing </th>
+      <td mat-cell *matCellDef="let element"> <button mat-raised-button
+          color="primary">+</button> </td>
+    </ng-container>
+
+    <!-- medical Column -->
+    <ng-container matColumnDef="medical">
+      <th mat-header-cell *matHeaderCellDef> medical </th>
+      <td mat-cell *matCellDef="let element"> <button  mat-raised-button
+          color="primary">+</button> </td>
+    </ng-container>
+
+    <!-- patient Column -->
+    <ng-container matColumnDef="patient">
+      <th mat-header-cell *matHeaderCellDef> patient </th>
+      <td mat-cell *matCellDef="let element"> <button  mat-raised-button
+          color="primary">+</button> </td>
+    </ng-container>
+
+    <!-- observation Column -->
+    <ng-container matColumnDef="observation">
+      <th mat-header-cell *matHeaderCellDef> observation </th>
+      <td mat-cell *matCellDef="let element"> {{element.observation}} </td>
+    </ng-container>
+
+    <!-- state Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef> state </th>
+      <td mat-cell *matCellDef="let element"> {{element.state.value}} </td>
+    </ng-container>
+
+    <!-- action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> action </th>
+      <td mat-cell *matCellDef="let element"> <button mat-raised-button
+          color="primary">Edit</button> </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

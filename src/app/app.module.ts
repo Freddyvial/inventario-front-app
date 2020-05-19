@@ -36,13 +36,15 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MedicalComponent } from './medical/medical.component';
 import {MatTableModule} from '@angular/material/table';
 import { MedicalService } from './services/MedicalService';
-
+import { TracingService } from './services/TracingService';
+import { TracingComponent } from './tracing/tracing.component';
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent },
   { path: '', pathMatch: 'full', redirectTo: 'test' },
   { path: 'login', component: LoginComponent },
-  { path: 'medical', component: MedicalComponent }
+  { path: 'medical', component: MedicalComponent },
+  { path: 'tracing', component: TracingComponent }
 ];
 @NgModule({
     declarations: [
@@ -52,6 +54,7 @@ const routes: Routes = [
     LoginComponent,
     AdminComponent,
     MedicalComponent,
+    TracingComponent,
   ],
   imports: [
     MatTableModule,
@@ -82,7 +85,7 @@ const routes: Routes = [
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,MedicalService,
+  providers: [TracingService,QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,MedicalService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })
