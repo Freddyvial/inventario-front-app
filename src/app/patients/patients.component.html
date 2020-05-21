@@ -19,7 +19,7 @@
         <mat-grid-tile>
             <mat-form-field appearance="fill">
                 <mat-label>Numero de documento</mat-label>
-                <input maxlength="15" matInput [(ngModel)]="patient.documentNumber" maxlength="15" required>
+                <input type="number" maxlength="15" matInput [(ngModel)]="patient.documentNumber" maxlength="15" required>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -75,7 +75,7 @@
             <mat-form-field>
                 <mat-label>Celular</mat-label>
                 <span matPrefix>+57 &nbsp;</span>
-                <input maxlength="15" type="tel" matInput [(ngModel)]="patient.phone" placeholder="3213456789" required>
+                <input type="number" maxlength="15"  matInput [(ngModel)]="patient.phone" placeholder="3213456789" required>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>

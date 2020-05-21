@@ -10,11 +10,13 @@ export class TracingService{
   constructor(private httpClient: HttpClient) { 
       
   }
-  public consultTracing() {
-    return this.httpClient.get(`${this.REST_API_SERVER}/tracing`);
+  public consultTracing(id) {
+    return this.httpClient.get(`${this.REST_API_SERVER}/tracing?id=`+id);
+  }
+  public consultDetailTracing(id){
+    return this.httpClient.get(`${this.REST_API_SERVER}/detailTracing?id=`+id);
   }
   public sendTracing(body) {
-
-    return this.httpClient.post(`${this.REST_API_SERVER}/tracing`, body)
+    return this.httpClient.post(`${this.REST_API_SERVER}/createDetailTracing`, body)
 }
 }

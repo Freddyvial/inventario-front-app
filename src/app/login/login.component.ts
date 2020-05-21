@@ -38,16 +38,19 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.user).subscribe(resp => {
       const user  = JSON.parse(JSON.stringify(resp));
       console.log(user);
-      console.log(user.role.id)
       if (resp != null) {
         localStorage.setItem('SESION', 'LOGUEADO');
+        localStorage.setItem('USER', user.id);
+        localStorage.setItem('USERNAME', user.userName)
         localStorage.setItem('ROLE', user.role.id);
-        this.router.navigateByUrl('/test')
-
+        if(user.role.id != 2){
+          this.router.navigateByUrl('/test')
+        }else{ this.router.navigateByUrl('/tracing')}
+       
+      
         this.spinner.hide();
       } else {
         this.spinner.hide();
-
         this.openSnackBar('Usuario o Contraseña invalidos', 'Verifica la información');
       }
     }, error => {

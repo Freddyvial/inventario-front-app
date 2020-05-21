@@ -7,51 +7,27 @@
   <h1 class="textTitle">Registro de Seguimiento</h1>
   <br />
   <br />
-  <mat-form-field >
+  <h1 *ngIf="!editTracing" class="textTitle">Control del Registro Nro {{tracing.id}}  </h1>
+  <br />
+  <mat-form-field *ngIf="editTracing">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
   </mat-form-field> 
-
-  <table mat-table  [dataSource]="dataSource">
+  
+  <table *ngIf="editTracing" mat-table  [dataSource]="dataSource">
 
     <!-- id Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <th mat-header-cell *matHeaderCellDef>  No. Seguimiento </th>
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <!-- date Column -->
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> date </th>
-      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-    </ng-container>
-
-    <!-- detailTracing Column -->
-    <ng-container matColumnDef="detailTracing">
-      <th mat-header-cell *matHeaderCellDef> detailTracing </th>
-      <td mat-cell *matCellDef="let element"> <button mat-raised-button
-          color="primary">+</button> </td>
-    </ng-container>
-
-    <!-- medical Column -->
-    <ng-container matColumnDef="medical">
-      <th mat-header-cell *matHeaderCellDef> medical </th>
-      <td mat-cell *matCellDef="let element"> <button  mat-raised-button
-          color="primary">+</button> </td>
     </ng-container>
 
     <!-- patient Column -->
     <ng-container matColumnDef="patient">
       <th mat-header-cell *matHeaderCellDef> patient </th>
-      <td mat-cell *matCellDef="let element"> <button  mat-raised-button
-          color="primary">+</button> </td>
+      <td mat-cell *matCellDef="let element">{{element.patient.fullName}}</td>
     </ng-container>
 
-    <!-- observation Column -->
-    <ng-container matColumnDef="observation">
-      <th mat-header-cell *matHeaderCellDef> observation </th>
-      <td mat-cell *matCellDef="let element"> {{element.observation}} </td>
-    </ng-container>
 
     <!-- state Column -->
     <ng-container matColumnDef="state">
@@ -62,13 +38,143 @@
     <!-- action Column -->
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> action </th>
-      <td mat-cell *matCellDef="let element"> <button mat-raised-button
-          color="primary">Edit</button> </td>
+      <td mat-cell *matCellDef="let element"> <button (click)="edit(element)" mat-raised-button
+          color="primary">See</button> </td>
 
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+
+  <mat-accordion *ngIf="!editTracing">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Data patient
+        </mat-panel-title>
+        <mat-panel-description>
+          click to see info
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list  cols="3" rowHeight="100px">
+        <mat-grid-tile>
+          <mat-form-field  appearance="fill">
+            <mat-label>DocumentType</mat-label>
+            <mat-select disabled [(ngModel)]="tracing.patient.documentType.id">             
+              <mat-option value=1>Registro Civíl</mat-option>
+              <mat-option value=2>Terjeta Identidad</mat-option>
+              <mat-option value=3>Cédula de Ciudadanía</mat-option>
+              <mat-option value=4>Cédula de Extrangería</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field  appearance="fill">
+            <mat-label>numberDocument</mat-label>
+            <input disabled type="number" maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.documentNumber" required>
+          </mat-form-field>
+        </mat-grid-tile>
+     <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>fullName</mat-label>
+          <input disabled maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.fullName" required >
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>phone</mat-label>
+          <input disabled maxlength="30" matInput maxlength="50"[(ngModel)]="tracing.patient.phone" required >
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>email</mat-label>
+          <input disabled maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.email" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>direction</mat-label>
+          <input disabled maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.direction" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>town</mat-label>
+          <input disabled maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.town.name" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>department</mat-label>
+          <input disabled maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.department.name" required>
+        </mat-form-field>
+      </mat-grid-tile>            
+    </mat-grid-list>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Detail tracing
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table *ngIf="!editTracing" mat-table  [dataSource]="dataSource">
+
+        <!-- checkObservation Column -->
+        <ng-container matColumnDef="checkObservation">
+          <th mat-header-cell *matHeaderCellDef>  checkObservation </th>
+          <td mat-cell *matCellDef="let element"> {{element.checkObservation}} </td>
+        </ng-container>
+    
+        <!-- medication Column -->
+        <ng-container matColumnDef="medication">
+          <th mat-header-cell *matHeaderCellDef> medication </th>
+          <td mat-cell *matCellDef="let element">{{element.medication}}</td>
+        </ng-container>
+    
+    
+        <!-- evolutionPatient Column -->
+        <ng-container matColumnDef="evolutionPatient">
+          <th mat-header-cell *matHeaderCellDef> evolutionPatient </th>
+          <td mat-cell *matCellDef="let element"> {{element.evolutionPatient}} </td>
+        </ng-container>    
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      
+      <mat-grid-list *ngIf="buttonNew" cols="3" rowHeight="100px">
+     <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>checkObservation</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="createDetailTracing.checkObservation" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>medication</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="createDetailTracing.medication" required>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="fill">
+          <mat-label>evolutionPatient</mat-label>
+          <input maxlength="30" matInput maxlength="50" [(ngModel)]="createDetailTracing.evolutionPatient" required>
+        </mat-form-field>
+      </mat-grid-tile>          
+    </mat-grid-list>
+    <button *ngIf="!buttonNew"  (click)="newDetailTracing()" mat-raised-button
+    color="primary">new</button>
+    <button *ngIf="buttonNew" (click)="cancel()" mat-raised-button
+    color="primary">cancel</button>
+    <button [disabled]="isFormInvalid()" *ngIf="buttonNew" (click)="save()" mat-raised-button color="primary">Save</button>
+    </mat-expansion-panel>
+    <button (click)="closedEdit()" mat-raised-button
+    color="primary">closed</button>
+  </mat-accordion>
 
 </div>

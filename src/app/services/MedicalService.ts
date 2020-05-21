@@ -13,6 +13,9 @@ export class MedicalService{
   public getMedical() {
     return this.httpClient.get(`${this.REST_API_SERVER}/medical`);
   }
+  public checkMedical(userName) {
+    return this.httpClient.get(`${this.REST_API_SERVER}/checkMedical?userName=`+userName);
+  }
   public sendMedical(body) {
 
     return this.httpClient.post(`${this.REST_API_SERVER}/medical`, body)

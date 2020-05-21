@@ -15,7 +15,7 @@ export class AuthService {
    return this.httpClient.get(`${this.REST_API_SERVER}/consultUser?userName=`+userInfo.email+'&password='+userInfo.password);
   }
 
-  public isLoggedIn(){
+  public isLoggedIn(){;
     return localStorage.getItem('SESION') !== null;
   }
 
@@ -27,6 +27,7 @@ export class AuthService {
   public logout(){
     localStorage.removeItem('SESION');
     localStorage.removeItem('ROLE');
+    localStorage.removeItem('USER');
     // redirect Login
   }
 }

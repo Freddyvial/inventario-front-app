@@ -38,13 +38,14 @@ import {MatTableModule} from '@angular/material/table';
 import { MedicalService } from './services/MedicalService';
 import { TracingService } from './services/TracingService';
 import { TracingComponent } from './tracing/tracing.component';
+import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
-  { path: 'test', component: TestComponent },
+  { path: 'patients', component: PatientsComponent,canActivate: [AuthGuard] },// canActivate: [AuthGuard]
+  { path: 'test', component: TestComponent , canActivate: [AuthGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'test' },
   { path: 'login', component: LoginComponent },
-  { path: 'medical', component: MedicalComponent },
-  { path: 'tracing', component: TracingComponent }
+  { path: 'medical', component: MedicalComponent, canActivate: [AuthGuard] },
+  { path: 'tracing', component: TracingComponent, canActivate: [AuthGuard] }
 ];
 @NgModule({
     declarations: [
@@ -57,6 +58,7 @@ const routes: Routes = [
     TracingComponent,
   ],
   imports: [
+    MatExpansionModule,
     MatTableModule,
     MatTabsModule,
     MatSnackBarModule,
