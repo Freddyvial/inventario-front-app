@@ -28,6 +28,17 @@ export class HomeComponent {
       if(localStorage.getItem("ROLE")!="1")
       return true;
     }
+    isAdmin(){
+      if(localStorage.getItem("ROLE")!="3")
+      return true;
+    }
+    openDialog() {
+      const dialogRef = this.dialog.open(LoginComponent);
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
   
   logout(){
     console.log('logout');

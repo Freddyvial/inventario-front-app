@@ -28,6 +28,8 @@ export class AuthService {
     localStorage.removeItem('SESION');
     localStorage.removeItem('ROLE');
     localStorage.removeItem('USER');
+    localStorage.removeItem('RESULT')
+    localStorage.removeItem('USERNAME')
     // redirect Login
   }
 }

@@ -40,7 +40,7 @@ import { TracingService } from './services/TracingService';
 import { TracingComponent } from './tracing/tracing.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent,canActivate: [AuthGuard] },// canActivate: [AuthGuard]
+  { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent , canActivate: [AuthGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'test' },
   { path: 'login', component: LoginComponent },

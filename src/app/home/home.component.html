@@ -4,10 +4,10 @@
     <button class="exit" *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
     
     <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="!isLogged()"> <a routerLink="/login" routerLinkActive="active">login</a></button>
-      <button mat-menu-item *ngIf=isMedical()><a routerLink="/test" routerLinkActive="active">Test</a></button>
-      <button mat-menu-item *ngIf="isMedical() || !isPatient() " ><a routerLink="/medical" routerLinkActive="active">Medical</a></button> 
-      <button mat-menu-item *ngIf="!isMedical()"><a routerLink="/tracing" routerLinkActive="active">Tracing</a></button> 
+      <button mat-menu-item *ngIf="!isLogged()" > <a routerLink="/login" routerLinkActive="active">login</a></button>
+      <button mat-menu-item *ngIf="isMedical() && !isLogged() && isPatient() && isAdmin()"><a routerLink="/test" routerLinkActive="active">Test</a></button>
+      <button mat-menu-item *ngIf="isLogged() && isMedical() && isPatient()" ><a routerLink="/medical" routerLinkActive="active">Medical</a></button> 
+      <button mat-menu-item *ngIf="!isMedical() && isLogged() && isPatient()"><a routerLink="/tracing" routerLinkActive="active">Tracing</a></button> 
     </mat-menu>
   </mat-toolbar>
   <div class="content" position> 

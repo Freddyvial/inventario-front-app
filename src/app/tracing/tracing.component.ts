@@ -12,6 +12,7 @@ import { MedicalService } from '../services/MedicalService';
     styleUrls: ['./tracing.component.css']
 })
 export class TracingComponent {
+    idEditTracing;
     medical;
     buttonNew=false;
     editTracing = true;
@@ -81,7 +82,7 @@ export class TracingComponent {
         this.tracingService.sendTracing(this.createDetailTracing).subscribe(resul=>{
             console.log(resul)
             this.clean();
-            this.closedEdit();
+            this.importDetailTracing(this.idEditTracing);
             this.buttonNew=false;
         },error=>{
             console.log("Error::  ",error)
@@ -140,6 +141,7 @@ export class TracingComponent {
 
     }
     importDetailTracing(id) {
+        this.idEditTracing=id;
         this.tracingService.consultDetailTracing(id).subscribe(resp => {
             console.log(resp);
             this.detailTracing = resp;

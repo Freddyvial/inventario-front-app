@@ -3,6 +3,7 @@ import { QuestionsServices } from '../services/QuestionsServices';
 import { AnswerPatientServices } from '../services/AnswerPatientServices';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
+import { type } from 'os';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -27,6 +28,12 @@ export class TestComponent {
     this.importQuestions();
   
   }
+  theEnd(){
+    if(this.end){
+      return true;
+    }
+    return false;    
+  }
 
   importQuestions() {
     this.spinner.show();
@@ -41,6 +48,7 @@ export class TestComponent {
     });
   }
   goToRegistry() {
+    localStorage.setItem('RESULT',this.results.toString());
     this.router.navigateByUrl('/patients')
   }
 
@@ -66,20 +74,6 @@ export class TestComponent {
     this.currenQuestion.response = '';
   }
 
-  getResponses() {
-    this.spinner.show();
-    this.sumResponses();
-    const body = {
-      idPatient: '1',
-      resul: this.results
-    }
-    this.answerPatientServices.setAnswerPatient(body).subscribe(resp => {
-      this.spinner.hide();
-    }, error => {
-      this.spinner.hide();
-      console.error(error);
-    });
-  }
 
   sumResponses() {
     this.responses.forEach(r => {
@@ -89,7 +83,7 @@ export class TestComponent {
     }
 
     );
-
+    this.results=this.results*100;
     this.end = true;
   }
 

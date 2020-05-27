@@ -6,6 +6,7 @@ import { DepartmentService } from '../services/DepartmentService'
 import { TownServices } from '../services/TownServices'
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
+import { AnswerPatientServices } from '../services/AnswerPatientServices';
 @Component({
   selector: 'app-patients',
   templateUrl: './patients.component.html',
@@ -18,7 +19,7 @@ export class PatientsComponent {
   departments;
   towns;
   
-  constructor(private router: Router,private _snackBar: MatSnackBar,private spinner: NgxSpinnerService, private patientsServices: PatientsServices, private departmentService: DepartmentService, private townServices: TownServices) { }
+  constructor(private answerPatientServices: AnswerPatientServices,private router: Router,private _snackBar: MatSnackBar,private spinner: NgxSpinnerService, private patientsServices: PatientsServices, private departmentService: DepartmentService, private townServices: TownServices) { }
   ngOnInit() { 
        this.importDepartment();
   }
@@ -52,6 +53,7 @@ export class PatientsComponent {
     return this.email.hasError('email') ? 'Email incorrecto' : '';
   }
   patient = {
+    id:"",
     documentNumber: "",
     fullName: "",
     direction: "",
@@ -70,7 +72,8 @@ export class PatientsComponent {
     state: {
       id: "",
     },
-    birthDate: ""
+    birthDate: "",
+    result:""
   }
   clean() {
     this.router.navigateByUrl('/login');
@@ -93,11 +96,14 @@ export class PatientsComponent {
   }
 
   createPatient() {
+    this.patient.result=localStorage.getItem('RESULT');
     this.spinner.show();
     this.patientsServices.setPatient(this.patient).subscribe(resp => {
+      this.patient=JSON.parse(JSON.stringify(resp));;
       this.spinner.hide();
       this.clean();
       this.openSnackBar('Guardado con Exito', 'Datos correctos');
+     
     }, error => {
       if (error && error.message && error.message === 'Usuario ya existe') {
         console.info(error); // mostar mensaje en pantalla al usuario

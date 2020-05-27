@@ -3,7 +3,7 @@
    
     <mat-card-header *ngIf='currenQuestion.positiveAnswer !== 0'>
         <mat-card-title>Pregunta</mat-card-title>
-        <mat-card-subtitle>Numero: # {{currenQuestion.id}}</mat-card-subtitle>
+        <mat-card-subtitle>Responda Sí ó No</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content *ngIf='currenQuestion.positiveAnswer !==0'>
@@ -16,15 +16,15 @@
             <mat-radio-button value=1>Sí</mat-radio-button>
             <mat-radio-button value=0>No</mat-radio-button>
         </mat-radio-group>
-        <button *ngIf='currenQuestion.positiveAnswer !== 0' (click)='getNexQuestion()' mat-raised-button color="primary">Siguiente Pregunta </button>
+        <button [disabled]="!currenQuestion.response" *ngIf='currenQuestion.positiveAnswer !== 0 ' (click)='getNexQuestion()' mat-raised-button color="primary">Siguiente Pregunta </button>
 
     </mat-card-actions>
-    <button (click)='getResponses()' *ngIf='currenQuestion.positiveAnswer == 0' mat-raised-button color="primary">Resultado</button>    
-    
-</mat-card>
-<div *ngIf= 'end' >
+    <button (click)='sumResponses()' *ngIf='currenQuestion.positiveAnswer == 0 && !end' mat-raised-button color="primary">Resultado</button>    
+    <div *ngIf= 'end' >
     <h1>Muchas gracias por completar el test</h1>
-    <h2>Tu probabilidad es de:</h2>
-    {{results}}<p>%</p>
+    <h2>Tu probabilidad es de:  {{results}}% </h2>
+   
     <button  (click)='goToRegistry()' mat-raised-button color="primary"> ¡'Registro gratis!</button>
 </div>
+</mat-card>
+
