@@ -2,3 +2,25 @@
     text-align: center;
     
 }
+.textTitle{
+    color: #673ab7;
+}
+.example-small-box, .example-large-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 16px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  
+  .example-small-box {
+    height: 220px;
+    width: 340px;
+    
+  }
+  
+  .example-large-box {
+    height: 300px;
+    width: 600px;
+  }

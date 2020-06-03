@@ -1,3 +1,6 @@
 .textTitle{
     color: #673ab7;
 }
+agm-map {
+    height: 300px;
+}

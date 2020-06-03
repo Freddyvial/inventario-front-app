@@ -39,16 +39,21 @@ import { MedicalService } from './services/MedicalService';
 import { TracingService } from './services/TracingService';
 import { TracingComponent } from './tracing/tracing.component';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { AgmCoreModule } from '@agm/core';
+import {MapComponent} from './map/map.component';
+import { from } from 'rxjs';
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
+  { path: 'patients', component: PatientsComponent,canActivate: [AuthGuard] },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent , canActivate: [AuthGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'test' },
   { path: 'login', component: LoginComponent },
   { path: 'medical', component: MedicalComponent, canActivate: [AuthGuard] },
-  { path: 'tracing', component: TracingComponent, canActivate: [AuthGuard] }
+  { path: 'tracing', component: TracingComponent, canActivate: [AuthGuard] },
+  { path: 'map', component: MapComponent}
 ];
 @NgModule({
     declarations: [
+      MapComponent,
     HomeComponent,
     PatientsComponent,
     TestComponent,
@@ -83,6 +88,10 @@ const routes: Routes = [
     MatRadioModule,
     RouterModule.forRoot(routes),
     MatProgressSpinnerModule,
+    AgmCoreModule.forRoot({
+      apiKey: '',
+      libraries: ['places']
+    })
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],

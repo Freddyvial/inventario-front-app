@@ -84,6 +84,7 @@ export class TestComponent {
 
     );
     this.results=this.results*100;
+    this.results.toFixed(2);
     this.end = true;
   }
 

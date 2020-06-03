@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/tracing')
         } else {
           if (user.role.id == this.isPatient.id) {
-            this.router.navigateByUrl('/login')
+            this.router.navigateByUrl('/map')
           } else {
             if (user.role.id == this.isAdmin.id) {
               this.router.navigateByUrl('/medical')
