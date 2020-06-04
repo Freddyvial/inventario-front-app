@@ -41,6 +41,8 @@ import { TracingComponent } from './tracing/tracing.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { AgmCoreModule } from '@agm/core';
 import {MapComponent} from './map/map.component';
+import {ChartComponent} from './chart/chart.component';
+import { ChartsModule } from 'ng2-charts';
 import { from } from 'rxjs';
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent,canActivate: [AuthGuard] },// canActivate: [AuthGuard]
@@ -49,10 +51,12 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'medical', component: MedicalComponent, canActivate: [AuthGuard] },
   { path: 'tracing', component: TracingComponent, canActivate: [AuthGuard] },
-  { path: 'map', component: MapComponent}
+  { path: 'map', component: MapComponent},
+  { path: 'chart', component: ChartComponent}
 ];
 @NgModule({
     declarations: [
+      ChartComponent,
       MapComponent,
     HomeComponent,
     PatientsComponent,
@@ -63,6 +67,7 @@ const routes: Routes = [
     TracingComponent,
   ],
   imports: [
+    ChartsModule,
     MatExpansionModule,
     MatTableModule,
     MatTabsModule,
