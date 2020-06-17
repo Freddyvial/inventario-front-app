@@ -62,6 +62,14 @@
                 Algunos pacientes pueden presentar dificultad para respirar.
               </div>
             </mat-tab>
+            <mat-tab label="Resultado por Departamentos ">
+                <div style="display: block">
+                  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                    [legend]="barChartLegend" [chartType]="barChartType">
+                  </canvas>
+                </div>
+        
+            </mat-tab>
           </mat-tab-group>
     </div>
 </mat-card>

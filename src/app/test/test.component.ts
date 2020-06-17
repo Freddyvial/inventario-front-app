@@ -73,6 +73,18 @@ export class TestComponent {
     }
     this.currenQuestion.response = '';
   }
+//C1___________________________________________________________________________
+public barChartOptions = {
+  scaleShowVerticalLines: false,
+  responsive: true
+};
+public barChartLabels = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7'];
+public barChartType = 'bar';
+public barChartLegend = true;
+public barChartData = [
+  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Probabilidad Alta' },
+  { data: [28, 48, 40, 19, 86, 27, 90], label: 'Probabilidad Baja'  }
+];
 
 
   sumResponses() {

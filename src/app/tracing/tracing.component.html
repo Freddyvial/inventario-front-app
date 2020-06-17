@@ -110,8 +110,19 @@
           <mat-label>department</mat-label>
           <input disabled maxlength="30" matInput maxlength="50" [(ngModel)]="tracing.patient.department.name" required>
         </mat-form-field>
-      </mat-grid-tile>            
+      </mat-grid-tile>   
+      <mat-grid-tile>
+        <mat-form-field  appearance="fill">
+          <mat-label>State</mat-label>
+          <mat-select [(ngModel)]="tracing.state.id">             
+            <mat-option value=2>Curado</mat-option>
+            <mat-option value=3>Muerto</mat-option>
+            <mat-option value=4>Seguimiento</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>          
     </mat-grid-list>
+    <button  *ngIf="!isTracing()" (click)="saveStateTracing()" mat-raised-button color="primary">Save</button>    
     </mat-expansion-panel>
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">

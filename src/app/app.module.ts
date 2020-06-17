@@ -42,10 +42,11 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AgmCoreModule } from '@agm/core';
 import {MapComponent} from './map/map.component';
 import {ChartComponent} from './chart/chart.component';
+import {FooterComponent} from './footer/footer.component';
 import { ChartsModule } from 'ng2-charts';
 import { from } from 'rxjs';
 const routes: Routes = [
-  { path: 'patients', component: PatientsComponent,canActivate: [AuthGuard] },// canActivate: [AuthGuard]
+  { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
   { path: 'test', component: TestComponent , canActivate: [AuthGuard] },
   { path: '', pathMatch: 'full', redirectTo: 'test' },
   { path: 'login', component: LoginComponent },
@@ -56,6 +57,7 @@ const routes: Routes = [
 ];
 @NgModule({
     declarations: [
+      FooterComponent,
       ChartComponent,
       MapComponent,
     HomeComponent,
@@ -100,7 +102,7 @@ const routes: Routes = [
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
-  bootstrap: [HomeComponent],
+  bootstrap: [HomeComponent,FooterComponent],
   providers: [TracingService,QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,MedicalService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]

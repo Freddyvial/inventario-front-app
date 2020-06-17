@@ -16,7 +16,10 @@ export class TracingService{
   public consultDetailTracing(id){
     return this.httpClient.get(`${this.REST_API_SERVER}/detailTracing?id=`+id);
   }
-  public sendTracing(body) {
+  public sendDetailTracing(body) {
     return this.httpClient.post(`${this.REST_API_SERVER}/createDetailTracing`, body)
+}
+public createTracing(body) {
+  return this.httpClient.post(`${this.REST_API_SERVER}/tracing`, body)
 }
 }

@@ -77,19 +77,19 @@
       <mat-grid-tile>
         <mat-form-field appearance="fill">
           <mat-label>numberDocument</mat-label>
-          <input type="number" maxlength="30" matInput maxlength="50" [(ngModel)]="medical.numberDocument" required>
+          <input  matInput minlength="1" maxlength="10" placeholder="Ej. 1041265333" type="number"  [(ngModel)]="medical.numberDocument"  required>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field appearance="fill">
           <mat-label>fullName</mat-label>
-          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.fullName" required>
+          <input  matInput maxlength="50" [(ngModel)]="medical.fullName" required>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field appearance="fill">
           <mat-label>email</mat-label>
-          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.email" required>
+          <input  matInput maxlength="50" [(ngModel)]="medical.email" required>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>
@@ -105,7 +105,7 @@
       <mat-grid-tile>
         <mat-form-field appearance="fill">
           <mat-label>phone</mat-label>
-          <input maxlength="30" matInput maxlength="50" [(ngModel)]="medical.phone" required>
+          <input type="number" matInput maxlength="50" [(ngModel)]="medical.phone" required>
         </mat-form-field>
       </mat-grid-tile>
       <mat-grid-tile>

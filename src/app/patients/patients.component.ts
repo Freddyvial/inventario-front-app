@@ -148,7 +148,7 @@ export class PatientsComponent {
       id: "",
     },
     state: {
-      id: "",
+      id: "4",
     },
     birthDate: "",
     result: "",

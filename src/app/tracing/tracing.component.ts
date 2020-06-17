@@ -77,9 +77,24 @@ export class TracingComponent {
         this.editTracing = true;
        
     }
+    isTracing(){
+        if(this.tracing.state.id=="4"){
+            return true;
+        }
+    }
+    saveStateTracing(){
+        this.tracingService.createTracing(this.tracing).subscribe(resul=>{
+            console.log(resul);
+            this.closedEdit();
+            this.ngOnInit();
+        },error=>{
+            console.log("Error::  ",error);
+
+        })
+    }
     save(){
         this.createDetailTracing.idTracing=this.tracing.id;
-        this.tracingService.sendTracing(this.createDetailTracing).subscribe(resul=>{
+        this.tracingService.sendDetailTracing(this.createDetailTracing).subscribe(resul=>{
             console.log(resul)
             this.clean();
             this.importDetailTracing(this.idEditTracing);
@@ -119,7 +134,6 @@ export class TracingComponent {
     }
     consultIdMedical(){
     this.medicalService.checkMedical(localStorage.getItem("USERNAME")).subscribe(resul=>{
-        console.log(resul)
         this.medical=resul
         this.importTracing(this.medical.id);
        
@@ -129,7 +143,7 @@ export class TracingComponent {
     }
     importTracing(id) {
         this.tracingService.consultTracing(id).subscribe(resp => {
-            console.log(resp);
+  
             this.tracings = resp;
             this.dataSource = new MatTableDataSource<any>(this.tracings);
             this.dataSource.paginator = this.paginator;

@@ -1,11 +1,43 @@
 <div>
-    <div style="display: block">
-      <canvas baseChart
-              [datasets]="barChartData"
-              [labels]="barChartLabels"
-              [options]="barChartOptions"
-              [legend]="barChartLegend"
-              [chartType]="barChartType">
-      </canvas>
-    </div>
+  <div class="content-form">
+    <br />
+    <h1 class="textTitle">Gráficos del Covid19</h1>
+    <br />
+    <br />
   </div>
+
+  <mat-tab-group dynamicHeight>
+    <mat-tab label="Resultado por Departamentos ">
+        <div style="display: block">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType">
+          </canvas>
+        </div>
+
+    </mat-tab>
+    <mat-tab label="Chart 2">
+      <div>
+        <div style="display: block">
+          <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+            [chartType]="doughnutChartType"></canvas>
+        </div>
+
+      </div>
+    </mat-tab>
+    <mat-tab label="Chart 3">
+      <div>
+        <div style="display: block">
+          <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels"
+            [chartType]="radarChartType"></canvas>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Chart 4">
+      <div>
+        <div style="display: block">
+          <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
