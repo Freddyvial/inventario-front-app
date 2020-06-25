@@ -1,39 +1,40 @@
+<mat-card class="content">
 <div>
-  <div class="content-form">
+  <div >
     <br />
-    <h1 class="textTitle">Gráficos del Covid19</h1>
+    <h1 class="textTitle text-center">Gráficos del Covid19</h1>
     <br />
     <br />
   </div>
 
   <mat-tab-group dynamicHeight>
-    <mat-tab label="Resultado por Departamentos ">
-        <div style="display: block">
+    <mat-tab *ngIf="resultsByDepartment" label="Resultado por Departamentos ">
+        <div style="display: block" >
           <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
             [legend]="barChartLegend" [chartType]="barChartType">
           </canvas>
         </div>
 
     </mat-tab>
-    <mat-tab label="Chart 2">
-      <div>
+    <mat-tab *ngIf="dataUp" label="Estados de Pacientes">
+      <div >
         <div style="display: block">
-          <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels"
+          <canvas baseChart [data]="quantity" [labels]="nameState"
             [chartType]="doughnutChartType"></canvas>
         </div>
 
       </div>
     </mat-tab>
-    <mat-tab label="Chart 3">
+    <mat-tab  *ngIf="radarChartData.length"  label="Estados por Departamentos">
       <div>
-        <div style="display: block">
-          <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels"
+        <div  style="display: block">
+          <canvas baseChart [datasets]="radarChartData" [labels]="radarChartLabels" [options]="radarChartOptions"
             [chartType]="radarChartType"></canvas>
         </div>
       </div>
     </mat-tab>
-    <mat-tab label="Chart 4">
-      <div>
+    <mat-tab label="Pacientos Por edades">
+      <div >
         <div style="display: block">
           <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"></canvas>
         </div>
@@ -41,3 +42,4 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+</mat-card>

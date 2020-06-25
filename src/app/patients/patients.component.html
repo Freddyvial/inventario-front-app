@@ -1,14 +1,17 @@
-<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-scale-ripple-multiple" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
 <div class="content-form">
     <br />
-    <h1 class="textTitle">Registro de pacientes</h1>
+    <h1 class="textTitle text-center">Registro de pacientes</h1>
     <br />
     <br />
-    <mat-grid-list cols="3" rowHeight="100px">
+    <mat-grid-list *ngIf="!isAdmin()" cols="3" rowHeight="100px">
         <mat-grid-tile>
             <mat-form-field appearance="fill">
                 <mat-label>Tipo de documento</mat-label>
-                <mat-select  [(ngModel)]="patient.documentType.id">
+                <mat-select [(ngModel)]="patient.documentType.id">
                     <mat-option value="0">---Seleccione---</mat-option>
                     <mat-option value="1">Cédula</mat-option>
                     <mat-option value="2">Tarjeta de identidad</mat-option>
@@ -19,7 +22,8 @@
         <mat-grid-tile>
             <mat-form-field appearance="fill">
                 <mat-label>Numero de documento</mat-label>
-                <input type="number" maxlength="15" matInput [(ngModel)]="patient.documentNumber" maxlength="15" required>
+                <input type="number" maxlength="15" matInput [(ngModel)]="patient.documentNumber" maxlength="15"
+                    required>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -37,7 +41,7 @@
         <mat-grid-tile>
             <mat-form-field appearance="fill">
                 <mat-label>Departamento</mat-label>
-                <mat-select  [(ngModel)]="patient.department.id">
+                <mat-select [(ngModel)]="patient.department.id">
                     <mat-option (click)="importTownByDepartment(department.id)" *ngFor="let department of departments"
                         [value]="department.id">{{department.name}}</mat-option>
                 </mat-select>
@@ -48,14 +52,14 @@
                 <mat-label>Municipios</mat-label>
                 <mat-select [(ngModel)]="patient.town.id">
                     <mat-option *ngFor="let town of towns" [value]="town.id">{{town.name}}</mat-option>
-                 </mat-select>
+                </mat-select>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
             <mat-form-field appearance="fill">
                 <mat-label>Ingrese su email</mat-label>
-                <input maxlength="30" matInput placeholder="pat@example.com" [(ngModel)]="patient.email" [formControl]="email"
-                    required>
+                <input maxlength="30" matInput placeholder="pat@example.com" [(ngModel)]="patient.email"
+                    [formControl]="email" required>
                 <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
         </mat-grid-tile>
@@ -63,7 +67,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Estado</mat-label>
                 <mat-select disabled [(ngModel)]="patient.state.id">
-                    <mat-option  value="4">Seguimiento</mat-option>
+                    <mat-option value="4">Seguimiento</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -72,7 +76,8 @@
             <mat-form-field>
                 <mat-label>Celular</mat-label>
                 <span matPrefix>+57 &nbsp;</span>
-                <input type="number" maxlength="15"  matInput [(ngModel)]="patient.phone" placeholder="3213456789" required>
+                <input type="number" maxlength="15" matInput [(ngModel)]="patient.phone" placeholder="3213456789"
+                    required>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
@@ -88,25 +93,167 @@
 
     </mat-grid-list>
 
-    <div class="container">
+    <div *ngIf="!isAdmin()" class="container">
 
-        <h1 class="textTitle">Sistema de Geolocalización</h1>
-      
+        <h1 class="textTitle text-center">Sistema de Geolocalización</h1>
+
         <div class="form-group">
-          <label>Ponga el marcador lo mas cerca de su lugar actual</label>
-          <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+            <label>Ponga el marcador lo mas cerca de su lugar actual</label>
+            <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()"
+                placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off"
+                type="text" #search>
         </div>
-      
+
         <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
-          <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
-            (dragEnd)="markerDragEnd($event)"></agm-marker>
+            <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
+                (dragEnd)="markerDragEnd($event)"></agm-marker>
         </agm-map>
-      
+
         <h5>Address: {{address}}</h5>
         <div>Latitude: {{latitude}}</div>
         <div>Longitude: {{longitude}}</div>
-      </div>
+    </div>
 
-      <button  (click)='createPatient()'[disabled]="isFormInvalid()" mat-raised-button color="primary">Guardar</button>
+    <button *ngIf="!admin" (click)='createPatient()' [disabled]="isFormInvalid()" mat-raised-button
+        color="primary">Guardar</button>
+
+    <div *ngIf="isAdmin()">
+        <mat-form-field *ngIf="!form">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+        </mat-form-field>
+        <table mat-table *ngIf="!form" [dataSource]="dataSource">
+
+            <!-- fullName Column -->
+            <ng-container matColumnDef="fullName">
+                <th mat-header-cell *matHeaderCellDef> FullName </th>
+                <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+            </ng-container>
+
+            <!-- estado Column -->
+            <ng-container matColumnDef="state">
+                <th mat-header-cell *matHeaderCellDef>State </th>
+                <td mat-cell *matCellDef="let element"> {{element.state.value}} </td>
+            </ng-container>
+
+            <!-- phone Column -->
+            <ng-container matColumnDef="phone">
+                <th mat-header-cell *matHeaderCellDef> phone </th>
+                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+            </ng-container>
+
+            <!-- DocumentType.id Column -->
+            <ng-container matColumnDef="documentType.id">
+                <th mat-header-cell *matHeaderCellDef> DocumentType </th>
+                <td mat-cell *matCellDef="let element"> {{element.documentType.value}} </td>
+            </ng-container>
+
+            <!-- action Column -->
+            <ng-container matColumnDef="patient">
+                <th mat-header-cell *matHeaderCellDef> patient </th>
+                <td mat-cell *matCellDef="let element"> <button (click)="edit(element)" mat-raised-button
+                        color="primary">Edit patient</button> </td>
+
+            </ng-container>
+            <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef> user </th>
+                <td mat-cell *matCellDef="let element"> <button (click)="editUser(element)" mat-raised-button
+                        color="primary">Edit User</button> </td>
+
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+        <button *ngIf="!form" (click)="new()" mat-raised-button color="primary">Nuevo</button>
+        <div *ngIf="userForm" class="content-form">
+            <mat-grid-list cols="3" rowHeight="100px">
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>UserName</mat-label>
+                        <input matInput maxlength="50" [(ngModel)]="patient.user.userName" required>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Contraseña</mat-label>
+                        <input minlength="6" maxlength="12" matInput [type]="hide ? 'password' : 'text'"
+                            [(ngModel)]="patient.user.passWord">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Repita Contraseña</mat-label>
+                        <input minlength="6" maxlength="12" matInput [type]="hide1 ? 'password' : 'text'"
+                            [(ngModel)]="newPassword">
+                        <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide1">
+                            <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <button [disabled]="isPasswordInvalid()" (click)="savePassword()" mat-raised-button
+                color="primary">Save</button>
+            <button (click)="cancel()" mat-raised-button color="primary">Cancel</button>
+        </div>
+        <div *ngIf="form && !userForm" class="content-form">
+            <mat-grid-list cols="2" rowHeight="100px">
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>numberDocument</mat-label>
+                        <input disabled matInput minlength="1" maxlength="10" placeholder="Ej. 1041265333" type="number"
+                            [(ngModel)]="patient.documentNumber" required>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>fullName</mat-label>
+                        <input matInput maxlength="50" [(ngModel)]="patient.fullName" required>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>email</mat-label>
+                        <input matInput maxlength="50" [(ngModel)]="patient.email" required>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>State</mat-label>
+                        <mat-select [(ngModel)]="patient.state">
+                            <mat-option value="1">Activo</mat-option>
+                            <mat-option value="2">Inactivo</mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>phone</mat-label>
+                        <input type="number" matInput maxlength="50" [(ngModel)]="patient.phone" required>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field appearance="fill">
+                        <mat-label>DocumentType</mat-label>
+                        <mat-select [(ngModel)]="patient.documentType.id">
+                            <mat-option value=1>Registro Civíl</mat-option>
+                            <mat-option value=2>Terjeta Identidad</mat-option>
+                            <mat-option value=3>Cédula de Ciudadanía</mat-option>
+                            <mat-option value=4>Cédula de Extrangería</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <button [disabled]="isFormInvalid1()" (click)="save()" mat-raised-button color="primary">Save</button>
+            <button (click)="cancel()" mat-raised-button color="primary">Cancel</button>
+        </div>
+    </div>
 </div>
-

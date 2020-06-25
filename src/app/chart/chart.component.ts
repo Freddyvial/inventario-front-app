@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from "ngx-spinner";
+import { ChartServices } from '../services/ChartServices'
+import { ChartDataSets, ChartType, RadialChartOptions } from 'chart.js';
 @Component({
     selector: 'app-chart',
     templateUrl: './chart.component.html',
@@ -6,35 +9,167 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChartComponent implements OnInit {
     ngOnInit() {
+        this.consultByDepartmentByState();
+        this.consultResultByState();
+        this.consultResultByDeparment();
+        this.cosultByBirhDate();
     }
+    radarChartData = [];
 
-    constructor() { }
-//C1___________________________________________________________________________
+    constructor(private chartServices: ChartServices, private spinner: NgxSpinnerService) { }
+    public radarChartLabels = ['Recuperado', 'Enfermo', 'Seguimiento', 'Muerto'];
+
+    public radarChartType = 'radar';
+    quantityState = [0, 0, 0, 0];
+    nameDepartment;
+    namePrevius;
+    dataChart = [[], ""];
+    count;
+    nameS;
+    states = ['Recuperado', 'Enfermo', 'Seguimiento', 'Muerto'];
+    dataChar4 = [];
+    dataUp = false;
+    doughnutChartType = 'doughnut';
+    resultsByState;
+    nameState = [];
+    quantity = [];
+    nameDepartment2 = [];
+    lowProbability = [];
+    highProbability = [];
+    resultsByDepartment: any;
+    ages: any;
+
+    consultResultByDeparment() {
+        this.spinner.show();
+        this.chartServices.consultResultByDepartment().subscribe(resp => {
+            this.resultsByDepartment = resp;
+            console.log(resp);
+            for (let index = 0; index < this.resultsByDepartment.length; index++) {
+                this.nameDepartment2[index] = this.resultsByDepartment[index].nameDepartment;
+                this.lowProbability[index] = this.resultsByDepartment[index].lowProbability;
+                this.highProbability[index] = this.resultsByDepartment[index].highProbability;
+            }
+            this.spinner.hide();
+        }, error => {
+            console.log('Error:: ', error);
+            this.spinner.hide();
+        });
+
+    }
+    cosultByBirhDate() {
+        let countChildren = 0;
+        let youngBoys = 0;
+        let adults = 0;
+        let olderAdults = 0;
+        this.spinner.show();
+        this.chartServices.consultResultByBirthDate().subscribe(resp => {
+            console.log(resp);
+            this.ages = resp;
+            for (let index = 0; index < this.ages.length; index++) {
+                const age = this.ages[index].age;
+                if (age < 15) {
+                    countChildren += this.ages[index].quantity;
+                }
+                if (age >= 15 && age < 25) {
+                    youngBoys += this.ages[index].quantity;
+                }
+                if (age >= 25 && age < 60) {
+                    adults += this.ages[index].quantity;
+                }
+                if (age >= 60) {
+                    olderAdults += this.ages[index].quantity;
+                }
+            }
+            this.pieChartData[0] = countChildren;
+            this.pieChartData[1] = youngBoys;
+            this.pieChartData[2] = adults;
+            this.pieChartData[3] = olderAdults;
+
+
+
+
+
+        }, error => {
+            console.log("Error:: ", error)
+        });
+    }
+    consultByDepartmentByState() {
+        this.count = 0;
+        this.spinner.show();
+        this.chartServices.consultResultByDepartmentByState().subscribe(resp => {
+            this.resultsByState = resp;
+            const charData = new Map();
+            this.resultsByState.forEach(rs => {
+                let departamentStates = charData.get(rs.nameDepartment);
+
+                if (!departamentStates) {
+                    charData.set(rs.nameDepartment, { label: rs.nameDepartment, data: [0, 0, 0, 0] });
+                    departamentStates = charData.get(rs.nameDepartment);
+                }
+
+                for (let index = 0; index < this.states.length; index++) {
+                    if (this.states[index] === rs.nameState) {
+
+                        departamentStates.data[index] = rs.quantity;
+                    }
+
+                }
+
+            }
+
+
+            );
+            for (const data of charData.values()) {
+                this.radarChartData.push(data)
+            }
+
+
+            this.spinner.hide();
+        }, error => {
+            console.log('Error:: ', error);
+            this.spinner.hide();
+        });
+    }
+    consultResultByState() {
+        this.spinner.show();
+        this.chartServices.consultResultByState().subscribe(resp => {
+            this.resultsByState = resp;
+            console.log(resp);
+            this.dataUp = true;
+            for (let index = 0; index < this.resultsByState.length; index++) {
+                this.nameState[index] = this.resultsByState[index].nameState;
+                this.quantity[index] = this.resultsByState[index].quantity;
+            }
+
+            this.spinner.hide();
+        }, error => {
+            console.log('Error:: ', error);
+            this.spinner.hide();
+        });
+
+    }
+    //C1___________________________________________________________________________
     public barChartOptions = {
         scaleShowVerticalLines: false,
         responsive: true
     };
-    public barChartLabels = ['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7'];
+
+    public barChartLabels = this.nameDepartment2;
     public barChartType = 'bar';
     public barChartLegend = true;
     public barChartData = [
-        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Probabilidad Alta' },
-        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Probabilidad Baja'  }
+        { data: this.highProbability, label: 'Probabilidad Alta' },
+        { data: this.lowProbability, label: 'Probabilidad Baja' }
     ];
-//C2_________________________________________________________________________________
-public doughnutChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
-public doughnutChartData = [120, 150, 180, 90];
-public doughnutChartType = 'doughnut';
-//C3__________________________________________________________________________________
-public radarChartLabels = ['Q1', 'Q2', 'Q3', 'Q4'];
-public radarChartData = [
-  {data: [120, 130, 180, 70], label: '2017'},
-  {data: [90, 150, 200, 45], label: '2018'}
-];
-public radarChartType = 'radar';
-//C4__________________________________________________________________________________
-public pieChartLabels = ['Sales Q1', 'Sales Q2', 'Sales Q3', 'Sales Q4'];
-public pieChartData = [120, 150, 180, 90];
-public pieChartType = 'pie';
-//C5______________________________________________________________________________________
+    //C2_________________________________________________________________________________
+
+    //C4__________________________________________________________________________________
+    public pieChartLabels = ['Niños', 'Jovenes', 'Adultos', 'Adultos Mayores'];
+    public pieChartData = [120, 150, 180, 90];
+    public pieChartType = 'pie';
+
+
+    public radarChartOptions: RadialChartOptions = {
+        responsive: true,
+    };
 }

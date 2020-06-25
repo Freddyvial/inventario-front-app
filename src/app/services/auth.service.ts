@@ -14,6 +14,10 @@ export class AuthService {
   
    return this.httpClient.get(`${this.REST_API_SERVER}/consultUser?userName=`+userInfo.email+'&password='+userInfo.password);
   }
+  public upDatePassword(body) {
+    return this.httpClient.post(`${this.REST_API_SERVER}/upDatePassword`, body)
+  }
+  
 
   public isLoggedIn(){;
     return localStorage.getItem('SESION') !== null;

@@ -1,6 +1,6 @@
 <div class="container">
 
-    <h1>Ingrese su localización</h1>
+    <h1 class="text-center">Ingrese su localización</h1>
   
     <div class="form-group">
       <label>Enter address</label>
@@ -8,11 +8,21 @@
     </div>
   
     <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+      <agm-marker 
+      *ngFor="let m of markers; let i = index"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [label]="m.label"
+      
+     >
+      
+    <agm-info-window>
+      <strong>Paciente del Covid19</strong>
+    </agm-info-window>
+    
+  </agm-marker>
       <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true"
         (dragEnd)="markerDragEnd($event)"></agm-marker>
     </agm-map>
-  
-    <h5>Address: {{address}}</h5>
-    <div>Latitude: {{latitude}}</div>
-    <div>Longitude: {{longitude}}</div>
+
   </div>

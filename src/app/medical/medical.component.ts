@@ -5,8 +5,10 @@ import { MedicalService } from '../services/MedicalService';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { from } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { LoginComponent } from '../login/login.component';
 @Component({
     selector: "app-medical",
     templateUrl: './medical.component.html',
@@ -18,9 +20,13 @@ export class MedicalComponent {
         this.importMedical();
     }
 
-    constructor(private _snackBar: MatSnackBar, private router: Router, private medicalService: MedicalService, private spinner: NgxSpinnerService) { }
+    constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router, private medicalService: MedicalService, private spinner: NgxSpinnerService) { }
+    newPassword = "";
+    hide = true;
+    hide1 = true;
+    userForm = false;
     form = false;
-    displayedColumns: string[] = ['id', 'numberDocument', 'fullName', 'email', 'phone', 'documentType.id', 'state', 'action'];
+    displayedColumns: string[] = ['fullName', 'phone', 'documentType.id', 'state', 'medical', 'user'];
     medicals: any;
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -31,15 +37,54 @@ export class MedicalComponent {
         email: "",
         phone: "",
         documentType: {
-            id: ""
+            id: "",
+            value: ""
         },
-        state: ""
+        state: {
+            id: "",
+            name: ""
+        },
+        user: {
+            id: "",
+            passWord: "",
+            role: {
+                id: "", name: ""
+            },
+            userName: ""
+        }
+
+
 
     }
+    editUser(element) {
+        this.medical = element;
+        this.userForm = true;
+        this.form = true;
+    }
+    isAdmin() {
+        if (localStorage.getItem("ROLE") == "3") {
+            return true;
+        }
+    }
     cancel() {
+        this.userForm = false;
         this.form = false;
         this.clean();
         this.ngOnInit();
+    }
+    isPasswordInvalid() {
+        if (!this.medical.user.passWord || !this.newPassword || this.medical.user.passWord.length <= 5 || this.newPassword.length <= 5) {
+            return true;
+        }
+
+    }
+    savePassword() {
+        if (this.medical.user.passWord != this.newPassword) {
+            return this.openSnackBar('Contraseñas NO COINCIDEN', 'VERIFICAR DATOS');
+        }else{
+            this.updatePassword();
+        }
+
     }
     new() {
         this.form = true;
@@ -62,11 +107,24 @@ export class MedicalComponent {
         this.medical.fullName = "";
         this.medical.numberDocument = "";
         this.medical.phone = "";
-        this.medical.state = ""
+        this.medical.state.name = "";
+        this.medical.user.userName = "";
+        this.newPassword="";
     }
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
+    updatePassword() {
+        this.spinner.show();
+        this.authService.upDatePassword(this.medical.user).subscribe(resp => {
+            this.openSnackBar('Actualizado', 'Correcto');
+            this.spinner.hide();
+            this.cancel();
+        }, error => {
+            console.log("Error:: ", error)
+            this.spinner.hide();
+        });
     }
     save() {
         if (this.isNumberInvalid) {
@@ -85,20 +143,21 @@ export class MedicalComponent {
                     this.clean();
                     this.form = false;
                     this.ngOnInit();
+                    this.cancel();
 
                 }, error => {
 
                     if (error && error.message && error.message === 'Usuario ya existe') {
                         console.info(error); // mostar mensaje en pantalla al usuario
-                        this.medical.email="";
+                        this.medical.email = "";
                         this.ngOnInit();
-                      } else {
-                        this.medical.email="";
+                    } else {
+                        this.medical.email = "";
                         console.error(error);
                         this.openSnackBar('Error al guardar', 'Verifica la información');
                         this.ngOnInit();
-                      }
-                      this.spinner.hide();
+                    }
+                    this.spinner.hide();
 
 
                 });

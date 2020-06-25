@@ -12,5 +12,8 @@ export class PatientsServices{
 
         return this.httpClient.post(`${this.REST_API_SERVER}/patients`, body)
     }
+    public consulAllPatients(){
+        return this.httpClient.get(`${this.REST_API_SERVER}/patients`)
+    }
 
 }
