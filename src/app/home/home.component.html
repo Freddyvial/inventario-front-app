@@ -10,6 +10,7 @@
       <button mat-menu-item *ngIf="isMedical() && !isLogged() && isPatient() && isAdmin()"><a routerLink="/test" routerLinkActive="active">Test</a></button>
       <button mat-menu-item *ngIf="isLogged() && isMedical() && isPatient()" ><a routerLink="/medical" routerLinkActive="active">Medical</a></button> 
       <button mat-menu-item *ngIf="!isMedical() && isLogged() && isPatient()"><a routerLink="/tracing" routerLinkActive="active">Tracing</a></button> 
+      <button mat-menu-item *ngIf="isLogged() && isMedical() && isPatient()" ><a routerLink="/patients" routerLinkActive="active">Patient</a></button>
     </mat-menu>
   </mat-toolbar>
   <router-outlet></router-outlet>

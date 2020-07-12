@@ -45,6 +45,7 @@ import {ChartComponent} from './chart/chart.component';
 import {FooterComponent} from './footer/footer.component';
 import { ChartsModule } from 'ng2-charts';
 import {ChartServices} from './services/ChartServices'
+import {MapServices} from './services/MapServices'
 import { from } from 'rxjs';
 const routes: Routes = [
   { path: 'patients', component: PatientsComponent },// canActivate: [AuthGuard]
@@ -104,7 +105,7 @@ const routes: Routes = [
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent,FooterComponent],
-  providers: [ChartServices,TracingService,QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,MedicalService,
+  providers: [MapServices,ChartServices,TracingService,QuestionsServices, AnswerPatientServices, PatientsServices, DepartmentService, TownServices,MedicalService,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })

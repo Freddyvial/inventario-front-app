@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { MapsAPILoader, MouseEvent } from '@agm/core';
-
+import {MapServices} from '../services/MapServices'
+import { from } from 'rxjs';
+import { error } from 'protractor';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
@@ -12,36 +14,28 @@ export class MapComponent implements OnInit {
     longitude: number;
     zoom: number;
     address: string;
+    locations:any;
     private geoCoder;
 
     @ViewChild('search')
     public searchElementRef: ElementRef;
     constructor(
+        private mapServices: MapServices,
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone
     ) { }
+    consultResultByLocation(){
+      this.mapServices.consultResultByLocation().subscribe(resp=>{
+        console.log(resp)
+        this.locations=resp;
+      },error=>{
+        console.log("Error:: " ,error)
+      })
+    }
       
-    markers: marker[] = [
-      {
-        lat: 51.673858,
-        lng: 7.815982,
-        label: 'A'
 
-      },
-      {
-        lat: 51.373858,
-        lng: 7.215982,
-        label: 'B'
- 
-      },
-      {
-        lat: 51.723858,
-        lng: 7.895982,
-        label: 'C'
-
-      }
-    ]
     ngOnInit() {
+      this.consultResultByLocation();
         //load Places Autocomplete
         this.mapsAPILoader.load().then(() => {
             this.setCurrentLocation();
@@ -103,10 +97,4 @@ export class MapComponent implements OnInit {
     
         });
       }
-}
-interface marker {
-	lat: number;
-	lng: number;
-	label?: string;
-
 }

@@ -18,6 +18,7 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./patients.component.css']
 })
 export class PatientsComponent {
+  adminEdit=false;
   newPassword = "";
   hide = true;
   hide1 = true;
@@ -189,7 +190,11 @@ export class PatientsComponent {
 
   }
   clean() {
-    this.router.navigateByUrl('/login');
+    if(this.admin){
+      this.clean1();
+      this.cancel();
+    }else{ this.router.navigateByUrl('/login');}
+   
   }
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
@@ -255,6 +260,7 @@ cancel() {
     this.form = false;
     this.clean1();
     this.ngOnInit();
+    this.adminEdit=false;
 }
 isPasswordInvalid() {
     if (!this.patient.user.passWord || !this.newPassword || this.patient.user.passWord.length <= 5 || this.newPassword.length <= 5) {
@@ -282,7 +288,7 @@ isFormInvalid1() {
 }
 edit(element) {
     this.patient = element;
-    this.form = true;
+    this.adminEdit=true;
 }
 clean1() {
     this.patient.id = "";

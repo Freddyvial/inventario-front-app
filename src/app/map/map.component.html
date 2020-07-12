@@ -1,15 +1,16 @@
-<div class="container">
+<mat-card class="content">
+  <div class="container">
 
-    <h1 class="text-center">Ingrese su localización</h1>
+    <h1 class="text-center textTitle">Mapa de Incidencias</h1>
   
     <div class="form-group">
       <label>Enter address</label>
       <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
     </div>
   
-    <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+    <agm-map *ngIf="locations" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
       <agm-marker 
-      *ngFor="let m of markers; let i = index"
+      *ngFor="let m of locations; let i = index"
       [latitude]="m.lat"
       [longitude]="m.lng"
       [label]="m.label"
@@ -26,3 +27,9 @@
     </agm-map>
 
   </div>
+  <button  class="material-cust-large-button" mat-fab color="primary"> <a class="text-white" routerLink="/chart" routerLinkActive="active">IR A GRÁFICAS</a></button>
+
+  
+
+</mat-card>
+
