@@ -98,7 +98,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MatProgressSpinnerModule,
     AgmCoreModule.forRoot({
-      apiKey: '',
+      apiKey: 'AIzaSyC2N4G8h7_SLojvPyJFbBHD3pPXoss64Jg',
       libraries: ['places']
     })
 
