@@ -1,0 +1,101 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<mat-card class="content-form">
+    <br />
+    <h1 class="textTitle text-center ">{{nameCampus}} </h1>
+    <br />
+    <br />
+    <mat-grid-list *ngIf="edit || new" cols="2" rowHeight="100px">
+        <mat-grid-tile >
+            <mat-form-field appearance="fill" >
+                <mat-label>Tipo de Artículo</mat-label>
+                <mat-select [disabled]="edit">
+                    <mat-option  (click)="getTypeArticleSelect(typeArticle)" *ngFor="let typeArticle of typesArticle" [value]="typeArticle.idTypeArticle">
+                        {{typeArticle.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre Artículo</mat-label>
+                <input maxlength="30" matInput maxlength="50"  [(ngModel)]="article.name" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Serial</mat-label>
+                <input maxlength="30" matInput maxlength="50" [disabled]="edit" [(ngModel)]="article.serial" required>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="fill">
+                <mat-label>Estado</mat-label>
+                <mat-select [(ngModel)]="article.state.id">
+                    <mat-option [value]=1>En uso</mat-option>
+                    <mat-option [value]=2>Malo</mat-option>
+                    <mat-option [value]=3>Bueno</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </mat-grid-tile>
+
+
+    </mat-grid-list>
+    <div *ngIf="edit || new">
+        <img [src]="url" height="200"> <br />
+        <input type='file' (change)="onSelectFile($event)">
+    </div>
+    <br />
+    <h1 *ngIf="!edit && !new" class="textTitle text-center">Artículos</h1>
+    <br />
+    <br />
+    <div *ngIf="!edit && !new">
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+            <table *ngIf="articles" mat-table [dataSource]="dataSource">
+
+                <!-- name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- serial Column -->
+                <ng-container matColumnDef="serial">
+                    <th mat-header-cell *matHeaderCellDef> serial </th>
+                    <td mat-cell *matCellDef="let element"> {{element.serial}} </td>
+                </ng-container>
+                <!-- state Column -->
+                <ng-container matColumnDef="state">
+                    <th mat-header-cell *matHeaderCellDef>State </th>
+                    <td mat-cell *matCellDef="let element"> {{element.state.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="article">
+                    <th mat-header-cell *matHeaderCellDef> article </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-raised-button color="primary" (click)='editArticle(element)'>Edit
+                            article</button> </td>
+
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+        </div>
+
+    </div>
+    <button class="btn" (click)='createArticle()' [disabled]="isFormInvalid()" mat-raised-button
+        color="primary">Guardar</button>
+    <button class="btn" (click)='newArticle()' *ngIf="!edit && !new" mat-raised-button color="primary">Nuevo</button>
+    <button *ngIf="edit || new" (click)="cancel()" mat-raised-button color="primary">Cancel</button>
+
+
+</mat-card>

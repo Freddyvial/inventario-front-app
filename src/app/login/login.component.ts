@@ -35,7 +35,8 @@ export class LoginComponent implements OnInit {
     this.consultRole();
   }
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  email = new FormControl("", [Validators.required, Validators.email]);
+  
 
   getErrorMessage() {
 
@@ -47,22 +48,14 @@ export class LoginComponent implements OnInit {
 
     this.loginService.login(this.user).subscribe(resp => {
       const user = JSON.parse(JSON.stringify(resp));
-      console.log(user);
+      
       if (resp != null) {
         localStorage.setItem('SESION', 'LOGUEADO');
         localStorage.setItem('USER', user.id);
         localStorage.setItem('USERNAME', user.userName)
-        localStorage.setItem('ROLE', user.role.id);
-        if (user.role.id == this.isMedical.id) {
-          this.router.navigateByUrl('/tracing')
-        } else {
-          if (user.role.id == this.isPatient.id) {
-            this.router.navigateByUrl('/map')
-          } else {
-            if (user.role.id == this.isAdmin.id) {
-              this.router.navigateByUrl('/medical')
-            }
-          }
+        localStorage.setItem('ROLE', user.role.idRole);
+        if (user.role.idRole == this.isAdmin.idRole) {
+          this.router.navigateByUrl('/campus')
         }
 
         this.spinner.hide();
@@ -78,9 +71,7 @@ export class LoginComponent implements OnInit {
   consultRole() {
     this.spinner.show();
     this.roleService.consultRole().subscribe(resp => {
-      this.isPatient = resp[0];
-      this.isMedical=resp[1];
-      this.isAdmin=resp[2];
+      this.isAdmin=resp[0];  
       this.spinner.hide();
     }, error => {
       console.log('Error:: ', error);

@@ -1,16 +1,16 @@
 <mat-toolbar color="primary">
-    <span>Covid-19 System</span>
+    <span>Inventary</span>
     <span class="example-spacer"></span>
     <button  mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Menú Principal</button>
     
     <button  *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
     
     <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="!isLogged()" > <a routerLink="/login" routerLinkActive="active">login</a></button>
-      <button mat-menu-item *ngIf="isMedical() && !isLogged() && isPatient() && isAdmin()"><a routerLink="/test" routerLinkActive="active">Test</a></button>
-      <button mat-menu-item *ngIf="isLogged() && isMedical() && isPatient()" ><a routerLink="/medical" routerLinkActive="active">Medical</a></button> 
-      <button mat-menu-item *ngIf="!isMedical() && isLogged() && isPatient()"><a routerLink="/tracing" routerLinkActive="active">Tracing</a></button> 
-      <button mat-menu-item *ngIf="isLogged() && isMedical() && isPatient()" ><a routerLink="/patients" routerLinkActive="active">Patient</a></button>
+      <button mat-menu-item *ngIf="!isLogged()" routerLink="/login" routerLinkActive="active">login</button>
+      <button mat-menu-item *ngIf="isLogged()"routerLink="/rooms" routerLinkActive="active">Rooms</button> 
+      <button mat-menu-item *ngIf="isLogged()" routerLink="/articles" routerLinkActive="active">Artículos</button>
+      <button mat-menu-item *ngIf="isLogged()"  routerLink="/campus" routerLinkActive="active">Otra Sede</button>
+   
     </mat-menu>
   </mat-toolbar>
   <router-outlet></router-outlet>

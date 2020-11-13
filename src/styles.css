@@ -15,6 +15,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin: 0px auto;
     height: 100%;
 }
+.textTitle{
+    color: blueviolet;
+}
 
 .content-form {
     width: 750px;
