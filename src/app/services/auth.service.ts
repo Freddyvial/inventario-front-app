@@ -26,14 +26,20 @@ export class AuthService {
   public getRole(){
     return localStorage.getItem('ROLE');
   }
+  public getMenu(){
+    return localStorage.getItem("MENU");
+  }
 
 
   public logout(){
     localStorage.removeItem('SESION');
     localStorage.removeItem('ROLE');
     localStorage.removeItem('USER');
-    localStorage.removeItem('RESULT')
-    localStorage.removeItem('USERNAME')
+    localStorage.removeItem('USERNAME');
+    localStorage.removeItem('NAMECAMPUS');
+    localStorage.removeItem('IDCAMPUS');
+    localStorage.removeItem('MENU');
+    localStorage.removeItem('CAMPUSUSER')
     // redirect Login
   }
 }

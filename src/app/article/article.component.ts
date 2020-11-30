@@ -1,10 +1,9 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { type } from 'os';
 import { NgxSpinnerService } from "ngx-spinner";
 import { ArticleServices } from '../services/ArticleServices';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',

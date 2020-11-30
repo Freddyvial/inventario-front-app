@@ -1,17 +1,20 @@
 <mat-toolbar color="primary">
     <span>Inventary</span>
     <span class="example-spacer"></span>
-    <button  mat-button [matMenuTriggerFor]="menu" mat-raised-button color="primary">Menú Principal</button>
-    
     <button  *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
-    
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngIf="!isLogged()" routerLink="/login" routerLinkActive="active">login</button>
-      <button mat-menu-item *ngIf="isLogged()"routerLink="/rooms" routerLinkActive="active">Rooms</button> 
-      <button mat-menu-item *ngIf="isLogged()" routerLink="/articles" routerLinkActive="active">Artículos</button>
-      <button mat-menu-item *ngIf="isLogged()"  routerLink="/campus" routerLinkActive="active">Otra Sede</button>
-   
+    <div *ngIf="campusSelec()">
+    <button  mat-button [matMenuTriggerFor]="main_menu" mat-raised-button color="primary" >Menú Principal</button>
+  
+    <mat-menu #main_menu="matMenu">
+      <ng-container *ngFor="let mainItem of objectKeys(my_menu)">
+        <button mat-menu-item [matMenuTriggerFor]="sub_menu">{{ mainItem }}</button>
+        <mat-menu #sub_menu="matMenu">
+           <button *ngFor="let subItem of my_menu[mainItem]" mat-menu-item [routerLink]="routerLink(subItem)" routerLinkActive="active">{{ subItem }}</button>
+           
+        </mat-menu>
+      </ng-container>
     </mat-menu>
+  </div>
   </mat-toolbar>
   <router-outlet></router-outlet>
 

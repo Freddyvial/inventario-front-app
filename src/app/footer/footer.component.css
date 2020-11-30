@@ -1,8 +1,7 @@
 .font{
     background-color: #4f2d8a;
     color: #ffffff;
-    height: 375px;
-    position: relative;
-    
+    height: auto;
+    position:sticky;
     
 }

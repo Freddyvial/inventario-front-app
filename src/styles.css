@@ -2,6 +2,9 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 html, body{
      height: 100%;
+     align-items: center;
+     align-content: center;
+     text-align: center;
  }
 
 
@@ -11,7 +14,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #fff;
     border: 1px solid transparent;
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
-    width: 1000px;
+    width: auto;
     margin: 0px auto;
     height: 100%;
 }
@@ -20,8 +23,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .content-form {
-    width: 750px;
+    width: min-content;
     margin: 0px auto;
-    height: 130%;
+    height: 100%;
+}
+.center{
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    
 }
 

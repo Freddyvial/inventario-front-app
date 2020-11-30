@@ -4,20 +4,56 @@
 </ngx-spinner>
 <mat-card class="content-form">
     <br />
-    <h1 class="textTitle text-center">Sedes</h1>
+    <h1 class="textTitle text-center ">Sedes</h1>
     <br />
     <br />
- 
-    <br />
-    <button  (click)="cam()" mat-stroked-button color="warn" routerLink="/rooms" routerLinkActive="active"> CAMSODA</button>
-    <img src="https://devaneostudios.com/wp-content/uploads/2017/02/logo-camsoda.png" > 
-    <br />
-    <button (click)="twl()" mat-stroked-button color="accent" routerLink="/rooms" routerLinkActive="active">THEWEBCAMLAB</button>
-    <img src="https://thewebcamlab.com/wp-content/uploads/2019/02/logo-TheWebcamLab-mobile-e1549675876377.png" >  
-    <br />
-    <button (click)="conq()"  mat-stroked-button color="primary" routerLink="/rooms" routerLinkActive="active">CONQUISTADORES></button>
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSL3VQKEaz3nXvJs7tRrJNZpdSTmPdz8q_DGg&usqp=CAU" > 
 
- 
+    <br />
+
+    <div *ngIf="new">
+        <mat-grid-list cols="2" rowHeight="100px">
+            <mat-grid-tile>
+                <mat-form-field appearance="fill">
+                    <mat-label>Nombre Sede</mat-label>
+                    <input maxlength="30" matInput maxlength="50" [(ngModel)]="campus.name" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="fill">
+                    <mat-label>Dirección</mat-label>
+                    <input maxlength="30" matInput maxlength="50" [(ngModel)]="campus.direction" required>
+                </mat-form-field>
+            </mat-grid-tile>
+
+
+
+        </mat-grid-list>
+        <div>
+            <img [src]="url" height="200"> <br />
+            <input type='file' (change)="onSelectFile($event)">
+        </div>
+        <br />
+        <br />
+        <button class="btn" (click)="createCampus()" [disabled]="isFormInvalid()" mat-raised-button
+            color="primary">Guardar</button>
+            <button class="btn" (click)="cancel()" mat-raised-button
+            color="primary">Cancelar</button>
+    </div>
+    <div *ngIf="tabs">
+
+        <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
+            <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab.name">
+                <div>
+                    <img (click)="getIn(tab)" routerLink="/rooms" [src]="tab.logo" height="200"> <br />
+
+                </div>
+               
+
+
+
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <button class="btn" (click)='newCampus()' *ngIf="!new && isAdmin()" mat-raised-button color="primary">Nuevo</button>
 
 </mat-card>

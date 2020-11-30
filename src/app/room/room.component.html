@@ -8,11 +8,12 @@
     <br />
     <br />
     <div *ngIf="edit || newArticle">
-        <mat-grid-list cols="3" rowHeight="100px">
+        <mat-grid-list cols="2" rowHeight="100px">
             <mat-grid-tile>
                 <mat-form-field appearance="fill">
                     <mat-label>Nombre Room</mat-label>
-                    <input maxlength="30" [disabled]="!newArticle" matInput maxlength="50" [(ngModel)]="room.name" required>
+                    <input maxlength="30" [disabled]="!newArticle" matInput maxlength="50" [(ngModel)]="room.name"
+                        required>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
@@ -83,7 +84,7 @@
         <h1 class="textTitle text-center">Rooms</h1>
         <br />
     </div>
-    <div class="mat-elevation-z8" *ngIf="dataSourceRooms && !edit && !newArticle" >
+    <div class="mat-elevation-z8" *ngIf="dataSourceRooms && !edit && !newArticle">
         <table *ngIf="rooms" mat-table [dataSource]="dataSourceRooms">
 
             <!-- name Column -->
@@ -114,6 +115,6 @@
 
 
     <button class="btn" *ngIf="!edit && !newArticle" (click)="new()" mat-raised-button color="primary">Nuevo</button>
-    <button  class="btn" mat-raised-button *ngIf="newArticle" (click)="cancel()" color="primary">Cancelar</button>
+    <button class="btn" mat-raised-button *ngIf="newArticle" (click)="cancel()" color="primary">Cancelar</button>
 
 </mat-card>

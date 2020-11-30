@@ -35,8 +35,9 @@ import {ArticleComponent} from './article/article.component';
 import {ArticleServices} from './services/ArticleServices';
 import {RoomComponent} from './room/room.component';
 import {RoomServices} from './services/RoomServices';
-import {CampusComponent} from './campus/campus.component'
-import {CampusService} from './services/CampusService'
+import {CampusComponent} from './campus/campus.component';
+import {CampusService} from './services/CampusService';
+import {MenuServices} from './services/MenuServices';
 import { from } from 'rxjs';
 const routes: Routes = [
   { path: 'articles', component: ArticleComponent ,canActivate: [AuthGuard]},// canActivate: [AuthGuard]
@@ -92,7 +93,7 @@ const routes: Routes = [
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent,FooterComponent],
-  providers: [RoomServices,ArticleServices,CampusService,
+  providers: [RoomServices,ArticleServices,CampusService,MenuServices,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })

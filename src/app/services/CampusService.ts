@@ -13,4 +13,8 @@ export class CampusService{
   public consultCampus() {
     return this.httpClient.get(`${this.REST_API_SERVER}/campus`);
   }
+  public sendCampus(body) {
+
+    return this.httpClient.post(`${this.REST_API_SERVER}/campus`, body)
+}
 }
