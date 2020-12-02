@@ -23,7 +23,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .content-form {
-    width: min-content;
+    width: max-content;
     margin: 0px auto;
     height: 100%;
 }

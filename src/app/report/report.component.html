@@ -1,0 +1,42 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"
+    [fullScreen]="true">
+    <p style="color: white"> Loading... </p>
+</ngx-spinner>
+<mat-card class="content-form">
+    <br />
+    <h1 class="textTitle text-center ">Reporte Diario</h1>
+    <br />
+    <br />
+    <br />
+    <div *ngIf="!reportOk && typesOfShoes">
+        <mat-grid-list cols="2" rowHeight="100px">            
+            <mat-grid-tile>
+                <mat-form-field appearance="fill">
+                    <mat-label>Room</mat-label>
+                    <input maxlength="30" disabled matInput maxlength="50" [(ngModel)]="report.room.name" required>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field appearance="fill">
+                    <mat-label>Responsable</mat-label>
+                    <input maxlength="30"disabled matInput maxlength="50" [(ngModel)]="report.user.userName" required>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <h2 class="textTitle text-center ">Chequea todos los artículos</h2>
+        <mat-selection-list #shoes>
+            <mat-list-option *ngFor="let shoe of typesOfShoes">
+                {{shoe}}
+            </mat-list-option>
+        </mat-selection-list>
+
+        <p>
+            Options selected: {{shoes.selectedOptions.selected.length}}
+        </p>
+    </div>
+    <div *ngIf="reportOk">
+        <h2 class="textTitle text-center ">Estado</h2>
+        <br />
+        <h3 class="textTitle text-center ">OK</h3>
+    </div>
+</mat-card>

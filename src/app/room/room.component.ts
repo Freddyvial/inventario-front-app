@@ -6,6 +6,7 @@ import { ArticleServices } from '../services/ArticleServices';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import {AuthService} from '../services/auth.service';
 @Component({
   selector: 'app-room',
   templateUrl: './room.component.html',
@@ -16,6 +17,7 @@ export class RoomComponent {
   articleSelec=false;
   edit=false;
   url: any;
+  users;
   rooms;
   articles;
   articles1;
@@ -24,19 +26,21 @@ export class RoomComponent {
   displayedColumnsRoom: string[] = ['name', 'responsible', "edit"];
   dataSource: MatTableDataSource<any>;
   dataSourceRooms: MatTableDataSource<any>;
-  constructor(private articleServices: ArticleServices, private roomServices: RoomServices, private spinner: NgxSpinnerService, private _snackBar: MatSnackBar) { };
+  constructor(private userService:AuthService, private articleServices: ArticleServices, private roomServices: RoomServices, private spinner: NgxSpinnerService, private _snackBar: MatSnackBar) { };
   ngOnInit() {
     this.nameCampus=localStorage.getItem('NAMECAMPUS');
     this.room.campus.idCampus=localStorage.getItem("IDCAMPUS");
     this.importArticles();
     this.consulAllRooms(this.room.campus.idCampus);
+    this.importUserByCampus(localStorage.getItem("IDCAMPUS"));
   }
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   nameCampus;
+  pothoOk=false;
   room = {
     idRoom: "",
     name: "",
-    responsible: "",
+    user: {idUser:"",userName:""},
     photo: Uint8Array,
     campus:{idCampus:""}
   }
@@ -57,6 +61,7 @@ export class RoomComponent {
       reader.onload = (event) => { // called once readAsDataURL is completed
         this.url = event.target.result;
         this.room.photo = this.url.split(",")[1];
+        this.pothoOk=true;
       }
     }
   }
@@ -66,7 +71,7 @@ export class RoomComponent {
     });
   }
   isFormInvalid() {
-    if (!this.room.name || !this.url || !this.room.responsible || this.articlesInRoom.length==0) {
+    if (!this.room.name || !this.pothoOk || !this.room.user|| this.articlesInRoom.length==0 ) {
       return true;
     }
   }
@@ -83,7 +88,10 @@ export class RoomComponent {
         this.spinner.hide();
         this.clean();
         this.openSnackBar('Guardado con Exito', 'Datos correctos');
-        this.edit=false;        
+        this.edit=false;   
+        this.newArticle=false; 
+        this.ngOnInit();
+            
 
       }
     }, error => {
@@ -117,7 +125,7 @@ export class RoomComponent {
     this.room.idRoom = "";
     this.room.name = "";
     this.room.photo = null;
-    this.room.responsible = "";
+    this.room.user.idUser = "";
     this.url = null;
     this.articles1=null;
     this.articles=null;
@@ -125,6 +133,9 @@ export class RoomComponent {
     this.dataSource = new MatTableDataSource<any>(this.articlesInRoom);
     this.dataSource.paginator = this.paginator;
 
+  }
+  getUserSelect(user){
+    this.room.user=user;
   }
   importArticles() {
     this.spinner.show();
@@ -136,15 +147,30 @@ export class RoomComponent {
       this.spinner.hide();
     });
   }
+  importUserByCampus(idCampus) {
+    this.spinner.show();
+    this.userService.consultUserByCampus(idCampus).subscribe(resp => {
+      console.log(resp)
+      this.users = resp;
+      this.spinner.hide();
+    }, error => {
+      console.log("Error:: ", error);
+      this.spinner.hide();
+    });
+  }
   editRoom(element) {
     this.room=element;
+    console.log(this.room)
     this.consulArticlesByRoom(this.room);
     this.url = ["data:image/jpeg;base64", this.room.photo].join(',');
     this.edit = true;
+    this.pothoOk=true;
   }
   consulArticlesByRoom(room){
     this.spinner.show();
+    console.log(room.idRoom);
     this.articleServices.consulArticesByRoom(room.idRoom).subscribe(resp => {
+      console.log(resp)
      this.articles1=resp;
      this.articlesInRoom=this.articles1;
       this.dataSource = new MatTableDataSource<any>(this.articles1);
@@ -210,6 +236,7 @@ export class RoomComponent {
     this.spinner.show();
     this.roomServices.consulAllRooms(idCampus).subscribe(resp => {
       this.rooms = resp;
+      console.log(resp)
       this.dataSourceRooms = new MatTableDataSource<any>(this.rooms);
       this.dataSourceRooms.paginator = this.paginator;
       this.spinner.hide();

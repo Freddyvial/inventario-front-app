@@ -19,10 +19,13 @@
             <mat-grid-tile>
                 <mat-form-field appearance="fill">
                     <mat-label>Responsable</mat-label>
-                    <input maxlength="30" matInput maxlength="50" [(ngModel)]="room.responsible" required>
+                    <mat-select>
+                        <mat-option (click)="getUserSelect(user)" *ngFor="let user of users" [value]="user.id">
+                            {{user.userName}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </mat-grid-tile>
-
 
 
         </mat-grid-list>
@@ -96,7 +99,7 @@
             <!-- responsible Column -->
             <ng-container matColumnDef="responsible">
                 <th mat-header-cell *matHeaderCellDef> Responsible </th>
-                <td mat-cell *matCellDef="let element"> {{element.responsible}}</td>
+                <td mat-cell *matCellDef="let element"> {{element.user.userName}}</td>
             </ng-container>
 
             <ng-container matColumnDef="edit">

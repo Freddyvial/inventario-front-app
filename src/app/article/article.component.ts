@@ -14,7 +14,7 @@ export class ArticleComponent {
   edit = false;
   displayedColumns: string[] = ['name', 'serial', 'state', "article"];
   dataSource: MatTableDataSource<any>;
-
+  photoOk=false;
   url: any;
   array;
   constructor(private cdr: ChangeDetectorRef, private spinner: NgxSpinnerService, private articleServices: ArticleServices, private _snackBar: MatSnackBar) { };
@@ -35,9 +35,8 @@ export class ArticleComponent {
     serial: "",
     state: { id: "", name: "" },
     typeArticle: { idTypeArticle: "", name: "" },
-    room:{idRoom:0},
+    room:{idRoom:""},
     campus:{idCampus:""}
-
   }
   clean() {
     this.article.id = "";

@@ -15,6 +15,10 @@ export class RoomServices{
     public consulAllRooms(idCampus){
         return this.httpClient.get(`${this.REST_API_SERVER}/rooms?idCampus=`+idCampus)
     }
+    public consulRoomsByUser(idUser){
+        return this.httpClient.get(`${this.REST_API_SERVER}/roomByUser?idUser=`+idUser)
+    }
+
     
 
 }

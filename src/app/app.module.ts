@@ -38,18 +38,22 @@ import {RoomServices} from './services/RoomServices';
 import {CampusComponent} from './campus/campus.component';
 import {CampusService} from './services/CampusService';
 import {MenuServices} from './services/MenuServices';
-import { from } from 'rxjs';
+import {ReportComponent} from './report/report.component';
+import {MatListModule} from '@angular/material/list';
+import {ReportService} from './services/ReportService';
 const routes: Routes = [
   { path: 'articles', component: ArticleComponent ,canActivate: [AuthGuard]},// canActivate: [AuthGuard]
   { path: 'rooms', component: RoomComponent ,canActivate: [AuthGuard]},
   { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: 'login', component: LoginComponent },
+  { path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
   { path: 'campus', component: CampusComponent,canActivate: [AuthGuard] },
 
 
 ];
 @NgModule({
     declarations: [
+      ReportComponent,
       CampusComponent,
       RoomComponent,
       FooterComponent,
@@ -59,6 +63,7 @@ const routes: Routes = [
     AdminComponent,
   ],
   imports: [
+    MatListModule,
     ChartsModule,
     MatExpansionModule,
     MatTableModule,
@@ -93,7 +98,7 @@ const routes: Routes = [
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent,FooterComponent],
-  providers: [RoomServices,ArticleServices,CampusService,MenuServices,
+  providers: [ReportService,RoomServices,ArticleServices,CampusService,MenuServices,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })
