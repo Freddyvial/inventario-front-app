@@ -149,6 +149,7 @@ export class RoomComponent {
   }
   importUserByCampus(idCampus) {
     this.spinner.show();
+    console.log(idCampus)
     this.userService.consultUserByCampus(idCampus).subscribe(resp => {
       console.log(resp)
       this.users = resp;

@@ -2,6 +2,8 @@
     <span>Inventary</span>
     <span class="example-spacer"></span>
     <button  *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
+    <button  *ngIf="isMonitor()" routerLink= "/users" routerLinkActive="active" mat-raised-button color="primary">Usuarios</button>
+    <button  *ngIf="isMonitor()" routerLink= "/report" routerLinkActive="active" mat-raised-button color="primary">Reportes</button>
     <div *ngIf="campusSelec()">
     <button  mat-button [matMenuTriggerFor]="main_menu" mat-raised-button color="primary" >Menú Principal</button>
   
@@ -16,6 +18,14 @@
     </mat-menu>
   </div>
   </mat-toolbar>
-  <router-outlet></router-outlet>
+
+  <mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side">
+      <button  *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
+    </mat-drawer>
+    <router-outlet></router-outlet>
+
+  </mat-drawer-container>
+
 
   

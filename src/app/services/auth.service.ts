@@ -19,8 +19,11 @@ export class AuthService {
   }
   public consultUserByCampus(campus){
   
-    return this.httpClient.get(`${this.REST_API_SERVER}/consultUserByCampus?userName=`+campus);
+    return this.httpClient.get(`${this.REST_API_SERVER}/consultUserByCampus?idCampus=`+campus);
    }
+   public createUser(body,idRole) {
+    return this.httpClient.post(`${this.REST_API_SERVER}/createUser?idRole=`+idRole, body)
+  }
 
   
 

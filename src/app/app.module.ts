@@ -41,6 +41,8 @@ import {MenuServices} from './services/MenuServices';
 import {ReportComponent} from './report/report.component';
 import {MatListModule} from '@angular/material/list';
 import {ReportService} from './services/ReportService';
+import {UserComponent} from './user/user.component';
+  import { from } from 'rxjs';
 const routes: Routes = [
   { path: 'articles', component: ArticleComponent ,canActivate: [AuthGuard]},// canActivate: [AuthGuard]
   { path: 'rooms', component: RoomComponent ,canActivate: [AuthGuard]},
@@ -48,11 +50,13 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
   { path: 'campus', component: CampusComponent,canActivate: [AuthGuard] },
+  { path: 'users', component: UserComponent,canActivate: [AuthGuard] },
 
 
 ];
 @NgModule({
     declarations: [
+      UserComponent,
       ReportComponent,
       CampusComponent,
       RoomComponent,

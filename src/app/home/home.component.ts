@@ -11,6 +11,7 @@ import { LoginComponent } from '../login/login.component';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent  {
+  showFiller = false;
   idRole;
   subMenus = new Array;
   title = 'Home';
@@ -33,8 +34,8 @@ export class HomeComponent  {
     }
   }
 
-  isAdmin() {
-    if (localStorage.getItem("ROLE") != "3")
+  isMonitor() {
+    if (localStorage.getItem("ROLE")=="5")
       return true;
   }
   openDialog() {

@@ -73,11 +73,11 @@ export class LoginComponent implements OnInit {
           console.log(error);
         });
         localStorage.setItem('SESION', 'LOGUEADO');
-        localStorage.setItem('USER', user.id);
+        localStorage.setItem('USER', user.idUser);
         localStorage.setItem('USERNAME', user.userName);
         localStorage.setItem('ROLE', user.role.idRole);
         localStorage.setItem('CAMPUSUSER', user.campus.idCampus);
-        if(user.role.idRole==3){
+        if(user.role.idRole==3 || user.role.idRole==5){
           this.router.navigateByUrl('/report')
         }else{ this.router.navigateByUrl('/campus')}
 
@@ -90,6 +90,7 @@ export class LoginComponent implements OnInit {
       }
     }, error => {
       console.error(error);
+      this.spinner.hide();
     })
 
   }

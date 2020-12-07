@@ -15,6 +15,22 @@ export class ReportService{
   }
   public sendReport(body) {
 
-    return this.httpClient.post(`${this.REST_API_SERVER}/report`, body)
+    return this.httpClient.post(`${this.REST_API_SERVER}/reports`,body)
 }
+public consulAriclesReport(idReport) {
+  return this.httpClient.get(`${this.REST_API_SERVER}/articlesReported?idReport=`+idReport);
+}
+public sendArticlesReported(body) {
+
+  return this.httpClient.post(`${this.REST_API_SERVER}/articlesReported`,body)
+}
+public consulMonitorModel(idMonitor) {
+  return this.httpClient.get(`${this.REST_API_SERVER}/monitorModel?idMonitor=`+idMonitor);
+}
+public sendMonitorModel(body) {
+
+  return this.httpClient.post(`${this.REST_API_SERVER}/monitorModel`,body)
+}
+
+
 }
