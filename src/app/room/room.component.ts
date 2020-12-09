@@ -33,9 +33,11 @@ export class RoomComponent {
     this.importArticles();
     this.consulAllRooms(this.room.campus.idCampus);
     this.importUserByCampus(localStorage.getItem("IDCAMPUS"));
+    this.logo=localStorage.getItem("LOGO");
   }
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   nameCampus;
+  logo;
   pothoOk=false;
   room = {
     idRoom: "",

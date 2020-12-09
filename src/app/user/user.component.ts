@@ -84,6 +84,8 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
         this.edit=false;
         this.changePassword=false;
         this.clean();
+        this.ngOnInit();
+        
        }
        clean(){
            this.user.password="";

@@ -94,6 +94,8 @@ export class CampusComponent implements OnInit {
     getIn(tap){
         localStorage.setItem('IDCAMPUS', tap.idCampus);
         localStorage.setItem('NAMECAMPUS', tap.name);
+        localStorage.setItem('LOGO',tap.logo);
+        
     }
     openSnackBar(message: string, action: string) {
         this._snackBar.open(message, action, {

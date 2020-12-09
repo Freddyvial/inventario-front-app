@@ -1,31 +1,32 @@
+
 <mat-toolbar color="primary">
-    <span>Inventary</span>
-    <span class="example-spacer"></span>
-    <button  *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
-    <button  *ngIf="isMonitor()" routerLink= "/users" routerLinkActive="active" mat-raised-button color="primary">Usuarios</button>
-    <button  *ngIf="isMonitor()" routerLink= "/report" routerLinkActive="active" mat-raised-button color="primary">Reportes</button>
-    <div *ngIf="campusSelec()">
-    <button  mat-button [matMenuTriggerFor]="main_menu" mat-raised-button color="primary" >Menú Principal</button>
-  
+  <span>Inventary</span>
+  <span class="example-spacer"></span>
+  <button *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
+  <div *ngIf="campusSelec()">
+    <button mat-button [matMenuTriggerFor]="main_menu" mat-raised-button color="primary">Menú Principal</button>
+
     <mat-menu #main_menu="matMenu">
       <ng-container *ngFor="let mainItem of objectKeys(my_menu)">
         <button mat-menu-item [matMenuTriggerFor]="sub_menu">{{ mainItem }}</button>
         <mat-menu #sub_menu="matMenu">
-           <button *ngFor="let subItem of my_menu[mainItem]" mat-menu-item [routerLink]="routerLink(subItem)" routerLinkActive="active">{{ subItem }}</button>
-           
+          <button *ngFor="let subItem of my_menu[mainItem]" mat-menu-item [routerLink]="routerLink(subItem)"
+            routerLinkActive="active">{{ subItem }}</button>
+
         </mat-menu>
       </ng-container>
     </mat-menu>
   </div>
-  </mat-toolbar>
+</mat-toolbar>
 
-  <mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side">
-      <button  *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
-    </mat-drawer>
-    <router-outlet></router-outlet>
+<div>
+  <button *ngIf="isMonitor()" routerLink="/users" routerLinkActive="active" mat-raised-button
+    color="primary">Usuarios</button>
+  <button *ngIf="isMonitor()" routerLink="/report" routerLinkActive="active" mat-raised-button
+    color="primary">Reportes</button>
+</div>
 
-  </mat-drawer-container>
+  <router-outlet ></router-outlet>
 
 
-  
+

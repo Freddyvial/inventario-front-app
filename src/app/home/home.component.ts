@@ -16,6 +16,7 @@ export class HomeComponent  {
   subMenus = new Array;
   title = 'Home';
   objectKeys = Object.keys;
+  
   constructor(public dialog: MatDialog, private router: Router, private loginService: AuthService) { }
   
   my_menu = {

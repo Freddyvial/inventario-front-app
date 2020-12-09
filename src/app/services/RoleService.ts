@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+const httpOptionsPlain = {
+  headers: new HttpHeaders({
+    'Accept': 'text/plain',
+    'Content-Type': 'text/plain'
+  }),
+  'responseType': 'text'
+};
 @Injectable({providedIn: 'root'})
 export class RoleService{
 
-    private REST_API_SERVER = "http://localhost:8090";
+    private REST_API_SERVER = "http://localhost:8080";
 
   constructor(private httpClient: HttpClient) { 
       

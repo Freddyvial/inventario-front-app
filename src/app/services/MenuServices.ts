@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 @Injectable()
 export class MenuServices{
-    private REST_API_SERVER = "http://localhost:8090";
+    private REST_API_SERVER = "http://localhost:8080";
 
     constructor(private httpClient: HttpClient) {
 

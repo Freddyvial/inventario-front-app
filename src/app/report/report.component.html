@@ -2,9 +2,10 @@
     [fullScreen]="true">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>
-<mat-card class="content-form">
+<mat-card class="content-form" [ngStyle]="{backgroundImage:'url(https://allegra.flowersetcfresno.com/pic/3100773_full-fondo-de-pantalla-4k-vertical-los-mejores-100-fondos-de-pantalla-hd-para-android-fondos-de.png)'}">
     <br />
     <h1 class="textTitle text-center ">Reporte Diario</h1>
+    <h1 class="textTitle text-center ">______________________________</h1>
     <br />
     <br />
     <br />
@@ -57,13 +58,11 @@
               </mat-form-field>       
         <div class="mat-elevation-z8">
             <table *ngIf="reports" mat-table [dataSource]="dataSource">
-
                 <!-- name Column -->
                 <ng-container matColumnDef="room">
                     <th mat-header-cell *matHeaderCellDef> Room </th>
                     <td mat-cell *matCellDef="let element"> {{element.room.name}} </td>
                 </ng-container>
-
                 <!-- serial Column -->
                 <ng-container matColumnDef="state">
                     <th mat-header-cell *matHeaderCellDef> state </th>
@@ -79,11 +78,11 @@
                     <th mat-header-cell *matHeaderCellDef>Date </th>
                     <td mat-cell *matCellDef="let element"> {{element.date}} </td>
                 </ng-container>
+                <!-- report Column -->
                 <ng-container matColumnDef="report">
                     <th mat-header-cell *matHeaderCellDef> report </th>
                     <td mat-cell *matCellDef="let element">
                         <button [disabled]="!isAdmin()" mat-raised-button color="primary" (click)='editReport(element)'>Cambiar Estado</button> </td>
-
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

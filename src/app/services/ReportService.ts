@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class ReportService{
 
-    private REST_API_SERVER = "http://localhost:8090";
+    private REST_API_SERVER = "http://localhost:8080";
 
   constructor(private httpClient: HttpClient) { 
       

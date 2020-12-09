@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     this.spinner.show();
 
     this.loginService.login(this.user).subscribe(resp => {
-     console.log(resp)
+     console.log(resp);
       const user = JSON.parse(JSON.stringify(resp));
    
       if (resp != null) {
@@ -97,6 +97,7 @@ export class LoginComponent implements OnInit {
   consultRole() {
     this.spinner.show();
     this.roleService.consultRole().subscribe(resp => {
+      console.log(resp);
       this.isAdmin = resp[0];
       this.spinner.hide();
     }, error => {
