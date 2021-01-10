@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class CampusService{
 
-    private REST_API_SERVER = "http://localhost:8080";
+    private REST_API_SERVER = "http://inventoryfg.ddns.net:8080/";
 
   constructor(private httpClient: HttpClient) { 
       

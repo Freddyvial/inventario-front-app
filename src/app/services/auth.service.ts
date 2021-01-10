@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private REST_API_SERVER = "http://localhost:8080";
+  private REST_API_SERVER = "http://inventoryfg.ddns.net:8080/";
 
   constructor(private httpClient: HttpClient) { }
   public login(userInfo: User){
@@ -48,6 +48,7 @@ export class AuthService {
     localStorage.removeItem('IDCAMPUS');
     localStorage.removeItem('MENU');
     localStorage.removeItem('CAMPUSUSER')
+    localStorage.removeItem('LOGO')
     // redirect Login
   }
 }

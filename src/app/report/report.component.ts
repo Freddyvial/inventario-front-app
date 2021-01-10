@@ -20,7 +20,7 @@ export class ReportComponent {
     constructor(private articleServices: ArticleServices, private roomServices: RoomServices, private reportService: ReportService, private spinner: NgxSpinnerService, private _snackBar: MatSnackBar) { }
     dateReport;
     dateHoy;
-    reports;
+    reports=new Array;
     reportOk = false;
     articles;
     date = new FormControl(new Date());
@@ -32,7 +32,7 @@ export class ReportComponent {
     displayedColumns: string[] = ['room', 'state', 'user', "date", "report"];
     dataSource: MatTableDataSource<any>;
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-    applyFilter(event: Event) {
+    applyFilter(event: any) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.dataSource.filter = filterValue.trim().toLowerCase();
         if (this.dataSource.paginator) {
@@ -47,6 +47,7 @@ export class ReportComponent {
     onGroupsChange(options: MatListOption[]) {
         // map these MatListOptions to their values
         this.articlesReported = options.map(o => o.value);
+        console.log(this.report)
 
     }
     checkArticles(articlesReported) {
@@ -56,7 +57,6 @@ export class ReportComponent {
             }
 
         }
-        console.log("Report::", this.articles)
         this.upArticlesReport(this.articles);
     }
     upArticlesReport(articles) {
@@ -65,16 +65,13 @@ export class ReportComponent {
             this.articleReport.report.idReport = this.report.idReport;
             this.arrayArticleReport.push(this.articleReport);
         }
-        console.log(this.arrayArticleReport);
         this.saveArticlesReported(this.arrayArticleReport);
 
     }
     saveArticlesReported(arrayArticleReport) {
         console.log(arrayArticleReport);
         for (let index = 0; index < arrayArticleReport.length; index++) {
-            console.log(arrayArticleReport[index]);
             this.reportService.sendArticlesReported(arrayArticleReport[index]).subscribe(resp => {
-                console.log("Artículo save::", resp)
             }, error => {
                 console.log(error);
             });
@@ -87,7 +84,7 @@ export class ReportComponent {
         state: { id: "" },
         user: {
             campus: { idCampus: "" },
-            id: "",
+            idUser: "",
             userName: ""
         }
     }
@@ -96,13 +93,12 @@ export class ReportComponent {
         article: { id: "" }
     }
     ngOnInit() {
-        this.consulReports(localStorage.getItem("CAMPUSUSER"));
-        this.report.user.campus.idCampus = localStorage.getItem("CAMPUSUSER");
+        this.consulReports(localStorage.getItem("CAMPUSUSER").toString());;
         if (this.isModel()) {
             this.consulRoomByUser(localStorage.getItem("USER"));
         }
-
-        this.report.user.id = localStorage.getItem("USER");
+        this.report.user.campus.idCampus=localStorage.getItem("CAMPUSUSER").toString();
+        this.report.user.idUser = localStorage.getItem("USER");
         this.report.user.userName = localStorage.getItem("USERNAME")
     }
     isModel() {
@@ -134,7 +130,8 @@ export class ReportComponent {
     consulReports(idCampus) {
         this.spinner.show();
         this.reportService.consultReport(idCampus).subscribe(resp => {
-            this.reports = resp;
+            console.log(resp);
+            this.reports = JSON.parse(JSON.stringify(resp));
             for (let index = 0; index < this.reports.length; index++) {
               this.reports[index].date=moment(this.reports[index].date).format('l')
                 
@@ -143,7 +140,6 @@ export class ReportComponent {
                 this.dataSource = new MatTableDataSource<any>(this.reports);
                 this.dataSource.paginator = this.paginator;
             } else {
-                console.log(localStorage.getItem("USER"));
                 this.reportService.consulMonitorModel(localStorage.getItem("USER")).subscribe(resp => {
                     this.monitorModel = JSON.parse(JSON.stringify(resp));
                     for (let index = 0; index < this.reports.length; index++) {
@@ -162,8 +158,6 @@ export class ReportComponent {
                 });
 
             }
-
-            console.log(this.reports);
             this.checkReport(this.reports);
             this.spinner.hide();
         }, error => {
@@ -172,10 +166,11 @@ export class ReportComponent {
         });
     }
     checkReport(reports) {
+        console.log(reports);
         let user = localStorage.getItem("USER");
         let now = moment().format('l');
         for (let index = 0; index < reports.length; index++) {
-            if (this.reports[index].user.id == user && moment(reports[index].date).format('l') == now) {
+            if (this.reports[index].user.idUser == user && reports[index].date == now) {
                 this.reportOk = true;
             }
 
@@ -184,6 +179,7 @@ export class ReportComponent {
     consulRoomByUser(idUser) {
         this.spinner.show();
         this.roomServices.consulRoomsByUser(idUser).subscribe(resp => {
+            console.log(resp)
             this.room = resp;
             this.report.room.idRoom = this.room.idRoom;
             this.report.room.name = this.room.name
@@ -197,11 +193,14 @@ export class ReportComponent {
     upReport(idState) {
         this.spinner.show();
         this.report.state.id = idState;
+        console.log(this.report);
         this.reportService.sendReport(this.report).subscribe(resp => {
+            console.log(resp)
             this.report = JSON.parse(JSON.stringify(resp));
             this.checkArticles(this.articlesReported);
-            this.spinner.hide();
             this.ngOnInit();
+            this.spinner.hide();
+           
         }, error => {
             this.spinner.hide();
             console.log(error);

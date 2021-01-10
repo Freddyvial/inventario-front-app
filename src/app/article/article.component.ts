@@ -74,9 +74,7 @@ export class ArticleComponent {
   consulAllArticles() {
 
     this.articleServices.consulAllArticles(localStorage.getItem("IDCAMPUS")).subscribe(resp => {
-      this.articles = resp;
-      console.log("consulAllArticles")
-      console.log(resp);
+      this.articles = resp; 
       this.dataSource = new MatTableDataSource<any>(this.articles);
       this.dataSource.paginator = this.paginator;
     }, error => {
@@ -88,8 +86,6 @@ export class ArticleComponent {
 
     this.articleServices.consulAllTypeArticle().subscribe(resp => {
       this.typesArticle = resp;
-      console.log("consulAllTypeArticle")
-      console.log(resp);
     }, error => {
       console.log("Error:: ", error);
 
@@ -97,29 +93,23 @@ export class ArticleComponent {
   }
   isFormInvalid() {
     if (!this.article.name || !this.article.photo || !this.article.serial ||
-       !this.article.state ) {//Pendiente la validacion, no funciona.
+       !this.article.state.id ) {//Pendiente la validacion, no funciona.
       return true;
     }
 
   }
   getTypeArticleSelect(typeArticle) {
     this.article.typeArticle = typeArticle;
-    console.log("Articulo Seleccionado");
-    console.log(typeArticle);
   }
   editArticle(element) {
     this.article = element;
-    console.log(this.article);
     this.url = ["data:image/jpeg;base64", this.article.photo].join(',');
     this.edit = true;
   }
   createArticle() {
     this.article.campus.idCampus=localStorage.getItem("IDCAMPUS");
-    console.log(this.article);
     this.spinner.show();
     this.articleServices.setArticles(this.article).subscribe(resp => {
-      console.log("createArticle");
-      console.log(resp);
       if (resp == null) {
         this.openSnackBar('Error de Serial', 'Serial NO existe');
         this.spinner.hide();
@@ -132,6 +122,7 @@ export class ArticleComponent {
         this.edit = false;
         this.consulAllArticles();
         this.new=false;
+        this.cancel();
       }
 
     }, error => {

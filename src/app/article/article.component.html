@@ -5,7 +5,6 @@
 <mat-card class="content-form">
     <br />
     <h1 class="textTitle text-center ">{{nameCampus}} </h1>
-    <h1 class="textTitle text-center ">______________________________</h1>
     <br />
     <br />
     <mat-grid-list *ngIf="edit || new" cols="2" rowHeight="100px">
@@ -96,7 +95,7 @@
     <button class="btn" (click)='createArticle()' [disabled]="isFormInvalid()" mat-raised-button
         color="primary">Guardar</button>
     <button class="btn" (click)='newArticle()' *ngIf="!edit && !new" mat-raised-button color="primary">Nuevo</button>
-    <button *ngIf="edit || new" (click)="cancel()" mat-raised-button color="primary">Cancel</button>
+    <button *ngIf="edit || new" (click)="cancel()" mat-raised-button color="primary">Cancelar</button>
 
 
 </mat-card>

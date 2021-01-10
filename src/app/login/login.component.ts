@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
   options: FormGroup;
   newUser = new User();
   ObjList;
-  subMenus=new Array;
+  subMenus = new Array;
   ngOnInit(): void {
 
     this.consultRole();
@@ -55,19 +55,18 @@ export class LoginComponent implements OnInit {
     this.spinner.show();
 
     this.loginService.login(this.user).subscribe(resp => {
-     console.log(resp);
       const user = JSON.parse(JSON.stringify(resp));
-   
+
       if (resp != null) {
         this.menuServices.consultMenu(user.role.idRole).subscribe(resp => {
           const menu = JSON.parse(JSON.stringify(resp));
           for (let index = 0; index < menu.subMenus.length; index++) {
-            this.subMenus[index] = menu.subMenus[index];            
+            this.subMenus[index] = menu.subMenus[index];
           }
-          localStorage.setItem('MENU',JSON.stringify(this.subMenus));
+          localStorage.setItem('MENU', JSON.stringify(this.subMenus));
 
-      
-          
+
+
 
         }, error => {
           console.log(error);
@@ -77,12 +76,18 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('USERNAME', user.userName);
         localStorage.setItem('ROLE', user.role.idRole);
         localStorage.setItem('CAMPUSUSER', user.campus.idCampus);
-        if(user.role.idRole==3 || user.role.idRole==5){
-          this.router.navigateByUrl('/report')
-        }else{ this.router.navigateByUrl('/campus')}
+        if (user.role.idRole == 5) {
+          this.router.navigateByUrl('/users')
+        } else {
+          if (user.role.idRole == 3) {
+            this.router.navigateByUrl('/report')
+          } else {
+            this.router.navigateByUrl('/campus')
+          }
+        }
 
-       
-        
+
+
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -97,7 +102,6 @@ export class LoginComponent implements OnInit {
   consultRole() {
     this.spinner.show();
     this.roleService.consultRole().subscribe(resp => {
-      console.log(resp);
       this.isAdmin = resp[0];
       this.spinner.hide();
     }, error => {
@@ -106,8 +110,6 @@ export class LoginComponent implements OnInit {
     });
 
   }
-
-
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {

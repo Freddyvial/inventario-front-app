@@ -2,10 +2,9 @@
     [fullScreen]="true">
     <p style="color: white"> Loading... </p>
 </ngx-spinner>
-<mat-card class="content-form" [ngStyle]="{backgroundImage:'url(https://allegra.flowersetcfresno.com/pic/3100773_full-fondo-de-pantalla-4k-vertical-los-mejores-100-fondos-de-pantalla-hd-para-android-fondos-de.png)'}">
+<mat-card class="content-form">
     <br />
     <h1 class="textTitle text-center ">Reporte Diario</h1>
-    <h1 class="textTitle text-center ">______________________________</h1>
     <br />
     <br />
     <br />
@@ -32,9 +31,6 @@
                     {{shoe}}
                 </mat-list-option>
             </mat-selection-list>
-            <p>
-                Options selected: {{shoes.selectedOptions.selected.length}}
-            </p>
 
             <button (click)=" upReport(2)"
                 *ngIf="shoes.selectedOptions.selected.length != typesOfShoes.length && shoes.selectedOptions.selected.length > 0"

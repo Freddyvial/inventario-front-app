@@ -6,7 +6,6 @@ html, body{
      align-items: center;
      align-content: center;
      text-align: center;
-     background:url(app/img/font2.jpg)
  }
 
 
@@ -15,20 +14,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .content {
 
     border: 1px solid transparent;
-    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 3px 9px rgba(207, 99, 240, 0.1);
     width: auto;
     margin: 0px auto;
     height: 100%;
 }
 .textTitle{
-    color: rgb(255, 255, 255);
+    color: rgb(192, 65, 209);
 }
 
 .content-form {
-    width: max-content;
+    width: 50vmax;
     margin: 0px auto;
-    height: 50rem;
-    background:url(app/img/font.png)
+    height: 150%;
+    
 }
 .center{
     align-items: center;

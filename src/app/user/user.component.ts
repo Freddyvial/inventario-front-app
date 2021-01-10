@@ -18,16 +18,17 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 })
 export class UserComponent implements OnInit {
     constructor(private roleService: RoleService, private authService: AuthService, private spinner: NgxSpinnerService, private _snackBar: MatSnackBar) { }
+    nameCampus;
     ngOnInit(): void {
+        this.nameCampus=localStorage.getItem('NAMECAMPUS');
         this.consulUserByCampus(localStorage.getItem("CAMPUSUSER"));
         this.consultRole();
-        this.user.campus.idCampus = localStorage.getItem("CAMPUSUSER").toString();
         this.creatorRole = localStorage.getItem("ROLE");
         if (this.creatorRole != 1) {
             this.user.idUser = localStorage.getItem("USER");
         }
-        console.log(this.user)
     }
+    
     displayedColumns: string[] = ['userName','changePassword'];
     @Output() 
 dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
@@ -57,7 +58,7 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
         this.roleService.consultRole().subscribe(resp => {
             this.roles = resp;
             this.roles.splice(0, 2);
-            console.log(this.roles);
+        
             this.spinner.hide();
         }, error => {
             console.log('Error:: ', error);
@@ -99,7 +100,7 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
         userName: "",
         password: "",
         role: { idRole: "" },
-        campus: { idCampus: "" }
+        campus: { idCampus: localStorage.getItem("CAMPUSUSER") }
     }
     getErrorMessage() {
 
@@ -114,8 +115,7 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
     }
     getRole(element) {
         this.user.role.idRole = element.idRole;
-        console.log(this.user);
-        console.log(this.creatorRole)
+        console.log(this.user)
     }
     checkPassword() {
         if (this.user.password != this.newPassword) {
@@ -143,7 +143,7 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
             this.authService.upDatePassword(this.user).subscribe(resp => {
                 this.openSnackBar('Actualizado', 'Correcto');
                 this.cancel();
-                this.consulUserByCampus(localStorage.getItem("CAMPUSUSER"));
+                //this.consulUserByCampus(localStorage.getItem("CAMPUSUSER"));
                 this.spinner.hide();
             }, error => {
                 console.log("Error:: ", error)
@@ -158,7 +158,8 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
         if(this.checkPassword()){
             this.spinner.show();
             this.authService.createUser(this.user, this.creatorRole).subscribe(resp => {
-                console.log(resp);
+
+                this.cancel();
                 this.spinner.hide();
             }, error => {
                 console.log(error);
@@ -175,7 +176,7 @@ dateChange:EventEmitter< MatDatepickerInputEvent< any>>;
             this.users.splice(0,1);
             this.dataSource = new MatTableDataSource<any>( this.users);
                     this.dataSource.paginator = this.paginator;
-            console.log(this.users)
+            
             this.spinner.hide();
         },error=>{
             console.log(error);

@@ -5,7 +5,7 @@
 <mat-card class="content-form">
     <br />
     <h1 class="textTitle text-center ">Sedes</h1>
-    <h1 class="textTitle text-center ">______________________________</h1>
+
     <br />
     <br />
 
@@ -40,7 +40,7 @@
             <button class="btn" (click)="cancel()" mat-raised-button
             color="primary">Cancelar</button>
     </div>
-    <div *ngIf="tabs">
+    <div *ngIf="campuses">
 
         <mat-tab-group [selectedIndex]="selected.value" (selectedIndexChange)="selected.setValue($event)">
             <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab.name">

@@ -28,12 +28,14 @@ export class RoomComponent {
   dataSourceRooms: MatTableDataSource<any>;
   constructor(private userService:AuthService, private articleServices: ArticleServices, private roomServices: RoomServices, private spinner: NgxSpinnerService, private _snackBar: MatSnackBar) { };
   ngOnInit() {
+    this.spinner.show();
     this.nameCampus=localStorage.getItem('NAMECAMPUS');
-    this.room.campus.idCampus=localStorage.getItem("IDCAMPUS");
+    this.room.campus.idCampus=localStorage.getItem("CAMPUSUSER");
     this.importArticles();
     this.consulAllRooms(this.room.campus.idCampus);
-    this.importUserByCampus(localStorage.getItem("IDCAMPUS"));
+    this.importUserByCampus(localStorage.getItem("CAMPUSUSER"));
     this.logo=localStorage.getItem("LOGO");
+    this.spinner.hide();
   }
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   nameCampus;
@@ -141,7 +143,7 @@ export class RoomComponent {
   }
   importArticles() {
     this.spinner.show();
-    this.articleServices.consulAllArticles(localStorage.getItem("IDCAMPUS")).subscribe(resp => {
+    this.articleServices.consulAllArticles(localStorage.getItem("CAMPUSUSER")).subscribe(resp => {
       this.articles = resp;
       this.spinner.hide();
     }, error => {
@@ -151,9 +153,7 @@ export class RoomComponent {
   }
   importUserByCampus(idCampus) {
     this.spinner.show();
-    console.log(idCampus)
     this.userService.consultUserByCampus(idCampus).subscribe(resp => {
-      console.log(resp)
       this.users = resp;
       this.spinner.hide();
     }, error => {
@@ -163,7 +163,6 @@ export class RoomComponent {
   }
   editRoom(element) {
     this.room=element;
-    console.log(this.room)
     this.consulArticlesByRoom(this.room);
     this.url = ["data:image/jpeg;base64", this.room.photo].join(',');
     this.edit = true;
@@ -173,7 +172,6 @@ export class RoomComponent {
     this.spinner.show();
     console.log(room.idRoom);
     this.articleServices.consulArticesByRoom(room.idRoom).subscribe(resp => {
-      console.log(resp)
      this.articles1=resp;
      this.articlesInRoom=this.articles1;
       this.dataSource = new MatTableDataSource<any>(this.articles1);
@@ -219,7 +217,6 @@ export class RoomComponent {
     for (let index1 = 0; index1 < this.articlesInRoom.length; index1++) {
       if (article.id == this.articlesInRoom[index1].id) {
         this.articlesInRoom.splice(index1, 1);
-        console.log("Eliminando de la lista");
       }
     }
     this.article.room.idRoom=null;
@@ -239,7 +236,6 @@ export class RoomComponent {
     this.spinner.show();
     this.roomServices.consulAllRooms(idCampus).subscribe(resp => {
       this.rooms = resp;
-      console.log(resp)
       this.dataSourceRooms = new MatTableDataSource<any>(this.rooms);
       this.dataSourceRooms.paginator = this.paginator;
       this.spinner.hide();
