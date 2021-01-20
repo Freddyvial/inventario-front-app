@@ -1,4 +1,3 @@
-
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="ball-scale-ripple-multiple"
     [fullScreen]="true">
     <p style="color: white"> Loading... </p>
@@ -71,7 +70,8 @@
                     <th mat-header-cell *matHeaderCellDef> article </th>
                     <td mat-cell *matCellDef="let element">
                         <button (click)="removeArticleRoom(element)" mat-raised-button color="primary">Eliminar
-                            Articulo</button> </td>
+                            Articulo</button>
+                    </td>
 
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -84,37 +84,28 @@
         <button class="btn" [disabled]="isFormInvalid()" (click)="createRoom()" mat-raised-button
             color="primary">Guardar</button>
     </div>
-    <div *ngIf="dataSourceRooms && !edit && !newArticle">
+    <div *ngIf="dataSourceRooms && !newArticle">
         <br />
         <h1 class="textTitle text-center">Rooms</h1>
         <br />
     </div>
     <div class="mat-elevation-z8" *ngIf="dataSourceRooms && !edit && !newArticle">
-        <table *ngIf="rooms" mat-table [dataSource]="dataSourceRooms">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let room of rooms">
+                <mat-expansion-panel-header (click)="editRoom(room)">
+                    <mat-panel-title>
+                        {{room.name}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p> {{room.user.userName}}</p>
+                <p>Lista de artículos</p>
+                <p *ngFor="let article of articlesInRoom" class="grid5">
+                    {{article.name}}
+                    <img [src]="article.photo" height="200">
+                </p>
+            </mat-expansion-panel>
 
-            <!-- name Column -->
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Name </th>
-                <td id="roomName" mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <!-- responsible Column -->
-            <ng-container matColumnDef="responsible">
-                <th mat-header-cell *matHeaderCellDef> Responsible </th>
-                <td mat-cell *matCellDef="let element"> {{element.user.userName}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="edit">
-                <th mat-header-cell *matHeaderCellDef> edit </th>
-                <td mat-cell *matCellDef="let element">
-                    <button (click)="editRoom(element)" mat-raised-button color="primary">edit</button> </td>
-
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsRoom"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsRoom;"></tr>
-        </table>
-        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-        </mat-paginator>
+        </mat-accordion>
     </div>
 
 

@@ -16,10 +16,10 @@ export class AuthGuard implements CanActivate {
     }
     console.log('next.url::', next.url[0].path);
     if(this.authService.isLoggedIn() && next.url.length && next.url[0].path === ''){
-      this.router.navigateByUrl('/login');
+      this.router.navigateByUrl('/rooms');
       return false
     }
-
+  
     return true;
   }
   

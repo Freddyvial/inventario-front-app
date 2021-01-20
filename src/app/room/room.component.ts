@@ -13,6 +13,7 @@ import {AuthService} from '../services/auth.service';
   styleUrls: ['./room.component.css']
 })
 export class RoomComponent {
+  
   newArticle=false;
   articleSelec=false;
   edit=false;
@@ -30,7 +31,12 @@ export class RoomComponent {
   ngOnInit() {
     this.spinner.show();
     this.nameCampus=localStorage.getItem('NAMECAMPUS');
-    this.room.campus.idCampus=localStorage.getItem("CAMPUSUSER");
+    if(localStorage.getItem("ROLE")=="1"){
+      this.room.campus.idCampus=localStorage.getItem("IDCAMPUS");
+    }else{
+      this.room.campus.idCampus=localStorage.getItem("CAMPUSUSER");
+    }
+   
     this.importArticles();
     this.consulAllRooms(this.room.campus.idCampus);
     this.importUserByCampus(localStorage.getItem("CAMPUSUSER"));
@@ -162,19 +168,21 @@ export class RoomComponent {
     });
   }
   editRoom(element) {
-    this.room=element;
-    this.consulArticlesByRoom(this.room);
-    this.url = ["data:image/jpeg;base64", this.room.photo].join(',');
-    this.edit = true;
-    this.pothoOk=true;
+    if(element != this.room){  
+      this.room=element;
+      this.consulArticlesByRoom(this.room);
+      this.url = ["data:image/jpeg;base64", this.room.photo].join(',');
+      this.pothoOk=true;}
   }
   consulArticlesByRoom(room){
     this.spinner.show();
-    console.log(room.idRoom);
     this.articleServices.consulArticesByRoom(room.idRoom).subscribe(resp => {
      this.articles1=resp;
      this.articlesInRoom=this.articles1;
-      this.dataSource = new MatTableDataSource<any>(this.articles1);
+     for (var i = 0; i < this.articlesInRoom.length; i++) {
+      this.articlesInRoom[i].photo = ["data:image/jpeg;base64", this.articlesInRoom[i].photo].join(',');   
+     }    
+      this.dataSource = new MatTableDataSource<any>(this.articlesInRoom);
       this.dataSource.paginator = this.paginator;
   
       this.spinner.hide();
@@ -260,6 +268,8 @@ export class RoomComponent {
     this.edit=false;
     this.newArticle=false;
   }
+
+  
  
 
 }

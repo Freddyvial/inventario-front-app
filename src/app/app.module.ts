@@ -101,7 +101,7 @@ const routes: Routes = [
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
-  bootstrap: [HomeComponent,FooterComponent],
+  bootstrap: [HomeComponent],
   providers: [ReportService,RoomServices,ArticleServices,CampusService,MenuServices,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
