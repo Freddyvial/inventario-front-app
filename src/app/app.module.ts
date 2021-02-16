@@ -42,6 +42,8 @@ import {ReportComponent} from './report/report.component';
 import {MatListModule} from '@angular/material/list';
 import {ReportService} from './services/ReportService';
 import {UserComponent} from './user/user.component';
+import {InventoryMovement} from './inventoryMovement/inventoryMovement.component'
+import {InventoryMovementService} from './services/InventoryMovementServices'
   import { from } from 'rxjs';
 const routes: Routes = [
   { path: 'articles', component: ArticleComponent ,canActivate: [AuthGuard]},// canActivate: [AuthGuard]
@@ -51,11 +53,13 @@ const routes: Routes = [
   { path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
   { path: 'campus', component: CampusComponent,canActivate: [AuthGuard] },
   { path: 'users', component: UserComponent,canActivate: [AuthGuard] },
+  { path: 'inventory', component: InventoryMovement ,canActivate: [AuthGuard] },
 
 
 ];
 @NgModule({
     declarations: [
+      InventoryMovement,
       UserComponent,
       ReportComponent,
       CampusComponent,
@@ -95,14 +99,14 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MatProgressSpinnerModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyC2N4G8h7_SLojvPyJFbBHD3pPXoss64Jg',
+      apiKey: '',
       libraries: ['places']
     })
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [ReportService,RoomServices,ArticleServices,CampusService,MenuServices,
+  providers: [InventoryMovementService,ReportService,RoomServices,ArticleServices,CampusService,MenuServices,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })

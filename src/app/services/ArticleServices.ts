@@ -28,6 +28,9 @@ export class ArticleServices{
     public consulArticesByRoom(id){
         return this.httpClient.get(`${this.REST_API_SERVER}/articlesByRoom?idRoom=`+id);
     }
+    public consulArticlesDisp(typeArticle,idCampus) {
+        return this.httpClient.post(`${this.REST_API_SERVER}/listArticlesChange?idCampus=`+idCampus, typeArticle)
+      }
     
 
 }
