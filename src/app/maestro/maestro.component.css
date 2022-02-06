@@ -1,0 +1,18 @@
+th{
+    background-color: #59B75E;
+    text-align: center;
+    color: #fff;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-color: #59B75E;
+    font: caption;
+}
+td{
+    text-align: center;
+}
+th:nth-child(even) {
+    background-color: #2AA771;
+    color: #fff;
+    border-color: #2AA771;
+
+  }

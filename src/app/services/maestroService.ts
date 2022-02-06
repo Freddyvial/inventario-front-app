@@ -10,14 +10,14 @@ const httpOptionsPlain = {
   'responseType': 'text'
 };
 @Injectable({providedIn: 'root'})
-export class RoleService{
+export class MaestroService{
 
     private REST_API_SERVER = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { 
       
   }
-  public consultRole() {
-    return this.httpClient.get(`${this.REST_API_SERVER}/role`);
+  public consultMaestro() {
+    return this.httpClient.get(`${this.REST_API_SERVER}/maestro`);
   }
 }

@@ -31,44 +31,25 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { AgmCoreModule } from '@agm/core';
 import {FooterComponent} from './footer/footer.component';
 import { ChartsModule } from 'ng2-charts';
-import {ArticleComponent} from './article/article.component';
-import {ArticleServices} from './services/ArticleServices';
-import {RoomComponent} from './room/room.component';
-import {RoomServices} from './services/RoomServices';
-import {CampusComponent} from './campus/campus.component';
-import {CampusService} from './services/CampusService';
-import {MenuServices} from './services/MenuServices';
-import {ReportComponent} from './report/report.component';
-import {MatListModule} from '@angular/material/list';
-import {ReportService} from './services/ReportService';
-import {UserComponent} from './user/user.component';
-import {InventoryMovement} from './inventoryMovement/inventoryMovement.component'
-import {InventoryMovementService} from './services/InventoryMovementServices'
-  import { from } from 'rxjs';
-const routes: Routes = [
-  { path: 'articles', component: ArticleComponent ,canActivate: [AuthGuard]},// canActivate: [AuthGuard]
-  { path: 'rooms', component: RoomComponent ,canActivate: [AuthGuard]},
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
-  { path: 'report', component: ReportComponent, canActivate: [AuthGuard]},
-  { path: 'campus', component: CampusComponent,canActivate: [AuthGuard] },
-  { path: 'users', component: UserComponent,canActivate: [AuthGuard] },
-  { path: 'inventory', component: InventoryMovement ,canActivate: [AuthGuard] },
 
+import {MatListModule} from '@angular/material/list';
+
+  import { from } from 'rxjs';
+import { MaestroComponent } from './maestro/maestro.component';
+const routes: Routes = [
+
+  { path: '', pathMatch: 'full', redirectTo: 'login' },//canActivate: [AuthGuard]
+  { path: 'login', component: LoginComponent },
+  { path: 'maestro', component: MaestroComponent },
 
 ];
 @NgModule({
     declarations: [
-      InventoryMovement,
-      UserComponent,
-      ReportComponent,
-      CampusComponent,
-      RoomComponent,
-      FooterComponent,
+    FooterComponent,
     HomeComponent,
-    ArticleComponent,
     LoginComponent,
     AdminComponent,
+    MaestroComponent,
   ],
   imports: [
     MatListModule,
@@ -106,7 +87,7 @@ const routes: Routes = [
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
   bootstrap: [HomeComponent],
-  providers: [InventoryMovementService,ReportService,RoomServices,ArticleServices,CampusService,MenuServices,
+  providers: [,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]
 })

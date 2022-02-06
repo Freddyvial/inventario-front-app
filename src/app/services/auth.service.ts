@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private REST_API_SERVER = "http://inventoryfg.ddns.net:8080/";
+  private REST_API_SERVER = "http://localhost:8080/";
 
   constructor(private httpClient: HttpClient) { }
   public login(userInfo: User){
@@ -17,10 +17,6 @@ export class AuthService {
   public upDatePassword(body) {
     return this.httpClient.post(`${this.REST_API_SERVER}/upDatePassword`, body)
   }
-  public consultUserByCampus(campus){
-  
-    return this.httpClient.get(`${this.REST_API_SERVER}/consultUserByCampus?idCampus=`+campus);
-   }
    public createUser(body,idRole) {
     return this.httpClient.post(`${this.REST_API_SERVER}/createUser?idRole=`+idRole, body)
   }

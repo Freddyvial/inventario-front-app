@@ -9,7 +9,6 @@ import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { HomeComponent } from '../home/home.component';
 import { RoleService } from '../services/roleservice';
 import { error } from 'protractor';
-import { MenuServices } from '../services/MenuServices';
 
 
 
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
   isMedical;
 
   durationInSeconds = 3;
-  constructor(private menuServices: MenuServices, private roleService: RoleService, private _snackBar: MatSnackBar, private spinner: NgxSpinnerService, private loginService: AuthService, private router: Router) { }
+  constructor(private roleService: RoleService, private _snackBar: MatSnackBar, private spinner: NgxSpinnerService, private loginService: AuthService, private router: Router) { }
   isLoggedIn: HomeComponent;
   user = new User();
   options: FormGroup;
@@ -57,37 +56,14 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.user).subscribe(resp => {
       const user = JSON.parse(JSON.stringify(resp));
 
-      if (resp != null) {
-        this.menuServices.consultMenu(user.role.idRole).subscribe(resp => {
-          const menu = JSON.parse(JSON.stringify(resp));
-          for (let index = 0; index < menu.subMenus.length; index++) {
-            this.subMenus[index] = menu.subMenus[index];
-          }
-          localStorage.setItem('MENU', JSON.stringify(this.subMenus));
-
-
-
-
-        }, error => {
-          console.log(error);
-        });
+      if (resp != null) {        
         localStorage.setItem('SESION', 'LOGUEADO');
         localStorage.setItem('USER', user.idUser);
         localStorage.setItem('USERNAME', user.userName);
         localStorage.setItem('ROLE', user.role.idRole);
-        localStorage.setItem('CAMPUSUSER', user.campus.idCampus);
-        if (user.role.idRole == 5) {
-          this.router.navigateByUrl('/users')
-        } else {
-          if (user.role.idRole == 3) {
-            this.router.navigateByUrl('/report')
-          } else {
-            this.router.navigateByUrl('/campus')
-          }
+        if (user) {
+          this.router.navigateByUrl('/maestro')
         }
-
-
-
         this.spinner.hide();
       } else {
         this.spinner.hide();
@@ -102,6 +78,7 @@ export class LoginComponent implements OnInit {
   consultRole() {
     this.spinner.show();
     this.roleService.consultRole().subscribe(resp => {
+      console.log(resp);
       this.isAdmin = resp[0];
       this.spinner.hide();
     }, error => {
