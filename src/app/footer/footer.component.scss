@@ -1,0 +1,30 @@
+.content-footer {
+    p{
+        margin-bottom: 10px;
+        margin-top: 5px;
+
+       .mail-contact-footer{
+           font-weight: bold;
+       }
+
+       .bussiness-name{
+           margin-right: 4px;
+       }
+   }
+    background-color: azure;
+    bottom: 0;
+    left: 0px;
+    right: 0;
+    position: fixed;
+    padding: 5px 20px 0 20px;
+    font-size: 14px;
+    z-index: 1;
+
+    .infoPagination {
+        text-align: center;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 12px;
+    }
+}

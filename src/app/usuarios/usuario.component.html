@@ -1,0 +1,13 @@
+<table *ngIf="usuarios" style="width: 100%;">
+  <tr>
+    <th>#</th>
+    <th>Usuarios</th>
+    <th>Rol</th>
+  </tr>
+  <tr *ngFor="let usuario of usuarios; let i = index">
+    <td>{{i+1}}</td>
+    <td>{{usuario.userName}}</td>
+    <td>{{usuario.role.name}}</td>
+  </tr>
+</table>
+  

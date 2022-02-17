@@ -1,7 +1,7 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { User } from '../user';
-import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -18,51 +18,46 @@ import { error } from 'protractor';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-
   hide = true;
-  roles;
-  isPatient;
-  isAdmin;
-  isMedical;
 
+  userForm: FormGroup;
   durationInSeconds = 3;
-  constructor(private roleService: RoleService, private _snackBar: MatSnackBar, private spinner: NgxSpinnerService, private loginService: AuthService, private router: Router) { }
-  isLoggedIn: HomeComponent;
+  constructor(private roleService: RoleService,
+    private _snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService,
+    private loginService: AuthService,
+    private router: Router,
+    private formBuilder: FormBuilder
+    ) {
+    this.userForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['',Validators.required],
+
+    });
+  }
   user = new User();
   options: FormGroup;
-  newUser = new User();
-  ObjList;
-  subMenus = new Array;
   ngOnInit(): void {
 
     this.consultRole();
   }
 
 
-  email = new FormControl("", [Validators.required, Validators.email]);
-
-
-  getErrorMessage() {
-
-    return this.email.hasError('email') ? 'Email incorrecto' : '';
-  }
-
-
 
   login() {
     this.spinner.show();
-
+    Object.assign(this.user, this.userForm.value);
     this.loginService.login(this.user).subscribe(resp => {
       const user = JSON.parse(JSON.stringify(resp));
 
-      if (resp != null) {        
-        localStorage.setItem('SESION', 'LOGUEADO');
-        localStorage.setItem('USER', user.idUser);
-        localStorage.setItem('USERNAME', user.userName);
-        localStorage.setItem('ROLE', user.role.idRole);
+      if (resp != null) {
+        sessionStorage.setItem('SESION', 'LOGUEADO');
+        sessionStorage.setItem('USER', user.idUser);
+        sessionStorage.setItem('USERNAME', user.userName);
+        sessionStorage.setItem('ROLE', user.role.idRole);
         if (user) {
-          this.router.navigateByUrl('/maestro')
+          console.log('LOGEADO:::')
+          this.router.navigateByUrl('/pageBlank')
         }
         this.spinner.hide();
       } else {
@@ -79,7 +74,6 @@ export class LoginComponent implements OnInit {
     this.spinner.show();
     this.roleService.consultRole().subscribe(resp => {
       console.log(resp);
-      this.isAdmin = resp[0];
       this.spinner.hide();
     }, error => {
       console.log('Error:: ', error);

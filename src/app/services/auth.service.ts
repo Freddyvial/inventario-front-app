@@ -7,44 +7,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private REST_API_SERVER = "http://localhost:8080/";
+  private REST_API_SERVER = "http://localhost:9090/";
 
   constructor(private httpClient: HttpClient) { }
-  public login(userInfo: User){
-  
+  public login(userInfo: User){  
    return this.httpClient.get(`${this.REST_API_SERVER}/consultUser?userName=`+userInfo.email+'&password='+userInfo.password);
   }
-  public upDatePassword(body) {
-    return this.httpClient.post(`${this.REST_API_SERVER}/upDatePassword`, body)
-  }
-   public createUser(body,idRole) {
-    return this.httpClient.post(`${this.REST_API_SERVER}/createUser?idRole=`+idRole, body)
-  }
+
 
   
 
   public isLoggedIn(){;
-    return localStorage.getItem('SESION') !== null;
+    return sessionStorage.getItem('SESION') !== null;
   }
 
   public getRole(){
-    return localStorage.getItem('ROLE');
+    return sessionStorage.getItem('ROLE');
   }
   public getMenu(){
-    return localStorage.getItem("MENU");
+    
+    return sessionStorage.getItem("MENU");
   }
 
 
   public logout(){
-    localStorage.removeItem('SESION');
-    localStorage.removeItem('ROLE');
-    localStorage.removeItem('USER');
-    localStorage.removeItem('USERNAME');
-    localStorage.removeItem('NAMECAMPUS');
-    localStorage.removeItem('IDCAMPUS');
-    localStorage.removeItem('MENU');
-    localStorage.removeItem('CAMPUSUSER')
-    localStorage.removeItem('LOGO')
-    // redirect Login
+    sessionStorage.removeItem('SESION');
+    sessionStorage.removeItem('ROLE');
+    sessionStorage.removeItem('USER');
+    sessionStorage.removeItem('USERNAME');    
   }
 }

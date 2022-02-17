@@ -1,6 +1,6 @@
 
 <mat-toolbar color="primary">
-  <span>StockModels</span>
+  <span>Inventario</span>
   <span class="example-spacer"></span>
   <button *ngIf="isLogged()" (click)="logout()" mat-raised-button color="primary">Logout</button>
   <div *ngIf="campusSelec()">
@@ -19,16 +19,16 @@
   </div>
 </mat-toolbar>
 
-<div>
+<!-- <div>
   <button *ngIf="isMonitor()" routerLink="/users" routerLinkActive="active" mat-raised-button
     color="primary">Usuarios</button>
   <button *ngIf="isMonitor()" routerLink="/report" routerLinkActive="active" mat-raised-button
     color="primary">Reportes</button>
     <button *ngIf="isMonitor()" routerLink="/rooms" routerLinkActive="active" mat-raised-button
     color="primary">Rooms</button>
-</div>
+</div> -->
+<app-sidebar></app-sidebar>
 
-  <router-outlet ></router-outlet>
 
 
 

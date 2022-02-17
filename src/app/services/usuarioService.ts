@@ -10,14 +10,20 @@ const httpOptionsPlain = {
   'responseType': 'text'
 };
 @Injectable({providedIn: 'root'})
-export class MaestroService{
+export class UsuarioService{
 
-    private REST_API_SERVER = "http://localhost:8080/";
+    private REST_API_SERVER = "http://localhost:9090/";
 
   constructor(private httpClient: HttpClient) { 
       
   }
-  public consultMaestro() {
-    return this.httpClient.get(`${this.REST_API_SERVER}/maestro`);
+  public consultUsuarios() {
+    return this.httpClient.get(`${this.REST_API_SERVER}/consultUsers`);
+  }
+  public upDatePassword(body) {
+    return this.httpClient.post(`${this.REST_API_SERVER}/upDatePassword`, body)
+  }
+   public createUser(body,idRole) {
+    return this.httpClient.post(`${this.REST_API_SERVER}/createUser?idRole=`+idRole, body)
   }
 }

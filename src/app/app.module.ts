@@ -35,12 +35,16 @@ import { ChartsModule } from 'ng2-charts';
 import {MatListModule} from '@angular/material/list';
 
   import { from } from 'rxjs';
-import { MaestroComponent } from './maestro/maestro.component';
+import { UsuarioComponent } from './usuarios/usuario.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { PageBlankComponent } from './pageBlank/pageBlank.component';
+
 const routes: Routes = [
 
   { path: '', pathMatch: 'full', redirectTo: 'login' },//canActivate: [AuthGuard]
   { path: 'login', component: LoginComponent },
-  { path: 'maestro', component: MaestroComponent },
+  { path: 'usuario', component: UsuarioComponent,canActivate: [AuthGuard] },
+  { path: 'pageBlank', component: PageBlankComponent },
 
 ];
 @NgModule({
@@ -49,9 +53,16 @@ const routes: Routes = [
     HomeComponent,
     LoginComponent,
     AdminComponent,
-    MaestroComponent,
+    UsuarioComponent,
+    SidebarComponent,
+    PageBlankComponent,
   ],
   imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
     MatListModule,
     ChartsModule,
     MatExpansionModule,
@@ -86,7 +97,7 @@ const routes: Routes = [
 
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [RouterModule],
-  bootstrap: [HomeComponent],
+  bootstrap: [HomeComponent,FooterComponent,SidebarComponent],
   providers: [,
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
   ]

@@ -29,14 +29,14 @@ export class HomeComponent  {
     }
   }
   campusSelec(){
-    if (localStorage.getItem("IDCAMPUS")) {
+    if (sessionStorage.getItem("IDCAMPUS")) {
       this.getMenu();
       return true;
     }
   }
 
   isMonitor() {
-    if (localStorage.getItem("ROLE")=="5")
+    if (sessionStorage.getItem("ROLE")=="5")
       return true;
   }
   openDialog() {
@@ -48,7 +48,7 @@ export class HomeComponent  {
   }
   getMenu() {
     this.subMenus=new Array;
-    const menu = JSON.parse(localStorage.getItem("MENU"));
+    const menu = JSON.parse(sessionStorage.getItem("MENU"));
     for (let index = 0; index < menu.length; index++) {
       this.subMenus[index] = menu[index].nameSubmenu;
     }
@@ -64,7 +64,7 @@ export class HomeComponent  {
   }
 
   routerLink(subItem) {
-    const menu = JSON.parse(localStorage.getItem("MENU"));
+    const menu = JSON.parse(sessionStorage.getItem("MENU"));
     for (let index = 0; index < menu.length; index++) {
       if (subItem == menu[index].nameSubmenu) {
         return menu[index].link

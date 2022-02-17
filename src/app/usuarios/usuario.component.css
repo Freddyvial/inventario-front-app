@@ -9,6 +9,7 @@ th{
 }
 td{
     text-align: center;
+    border:solid 1px;
 }
 th:nth-child(even) {
     background-color: #2AA771;
